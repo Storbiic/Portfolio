@@ -1,8 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import LoadingScreen from "@/components/LoadingScreen";
+import Navbar from "@/components/Navbar";
+import CursorFollower from "@/components/CursorFollower";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
+import Experience from "@/components/Experience";
+import Features from "@/components/Features";
 import Projects from "@/components/Projects";
+import OrganizationWorks from "@/components/OrganizationWorks";
+import SkillSet from "@/components/SkillSet";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
@@ -18,13 +24,21 @@ const Index = () => {
       {loading && <LoadingScreen onLoadingComplete={handleLoadingComplete} />}
       
       {!loading && (
-        <main className="relative">
-          <Hero />
-          <About />
-          <Projects />
-          <Contact />
-          <Footer />
-        </main>
+        <>
+          <CursorFollower />
+          <Navbar />
+          <main className="relative">
+            <Hero />
+            <About />
+            <Experience />
+            <Features />
+            <Projects />
+            <OrganizationWorks />
+            <SkillSet />
+            <Contact />
+            <Footer />
+          </main>
+        </>
       )}
     </>
   );

@@ -85,7 +85,7 @@ const Hero = () => {
             <div ref={ctaRef} className="flex flex-wrap items-center gap-4">
               <Button
                 size="lg"
-                className="group bg-primary text-primary-foreground hover:bg-primary/90 glow"
+                className="group bg-primary text-primary-foreground hover:bg-primary/90 glow magnetic-btn"
               >
                 <a href="#contact">Hire Me</a>
               </Button>
@@ -93,21 +93,21 @@ const Hero = () => {
                 <Button
                   size="icon"
                   variant="outline"
-                  className="border-primary/30 hover:bg-primary/10 hover:border-primary"
+                  className="border-primary/30 hover:bg-primary/10 hover:border-primary magnetic-btn"
                 >
                   <Github className="h-5 w-5" />
                 </Button>
                 <Button
                   size="icon"
                   variant="outline"
-                  className="border-primary/30 hover:bg-primary/10 hover:border-primary"
+                  className="border-primary/30 hover:bg-primary/10 hover:border-primary magnetic-btn"
                 >
                   <Linkedin className="h-5 w-5" />
                 </Button>
                 <Button
                   size="icon"
                   variant="outline"
-                  className="border-primary/30 hover:bg-primary/10 hover:border-primary"
+                  className="border-primary/30 hover:bg-primary/10 hover:border-primary magnetic-btn"
                 >
                   <Mail className="h-5 w-5" />
                 </Button>
@@ -115,15 +115,15 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Right: Spline 3D */}
+          {/* Right: Spline 3D - Liquid Glass */}
           <div
             ref={splineRef}
             className="relative h-[500px] lg:h-[600px]"
           >
             <iframe
-              src="https://my.spline.design/untitled-48cf87a95f9f973a2235a6f09ad35ed9/"
+              src="https://my.spline.design/liquidglass-rM3o93P8ISaWcg143hDOgO2T-RtD/"
               className="h-full w-full rounded-2xl border border-primary/20 glass"
-              title="3D Scene"
+              title="Liquid Glass 3D"
             />
             <div className="absolute -inset-4 rounded-2xl bg-gradient-to-r from-glow/10 to-glow-subtle/10 blur-2xl -z-10" />
           </div>
