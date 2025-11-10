@@ -1,25 +1,66 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import {
+  Code2,
+  Database,
+  Cloud,
+  Server,
+  Container,
+  FileCode,
+  Brain,
+  Bot,
+  Network,
+  Sparkles,
+  TrendingUp,
+  Cpu,
+  FileJson,
+  Braces,
+  Terminal,
+  Package,
+} from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const skills = [
-  { name: "Python", level: 95 },
-  { name: "TensorFlow", level: 90 },
-  { name: "PyTorch", level: 88 },
-  { name: "React", level: 92 },
-  { name: "TypeScript", level: 85 },
-  { name: "Node.js", level: 80 },
-  { name: "Docker", level: 82 },
-  { name: "SQL", level: 87 },
+const skillCategories = [
+  {
+    title: "Programming Languages",
+    skills: [
+      { name: "Python", icon: Code2 },
+      { name: "JavaScript", icon: FileJson },
+      { name: "TypeScript", icon: Braces },
+      { name: "Java", icon: Terminal },
+      { name: "C++", icon: Code2 },
+      { name: "R", icon: FileCode },
+    ],
+  },
+  {
+    title: "Data & Cloud",
+    skills: [
+      { name: "PostgreSQL", icon: Database },
+      { name: "AWS", icon: Cloud },
+      { name: "Docker", icon: Container },
+      { name: "Kubernetes", icon: Server },
+      { name: "MongoDB", icon: Database },
+      { name: "Apache Spark", icon: Package },
+    ],
+  },
+  {
+    title: "AI & ML",
+    skills: [
+      { name: "TensorFlow", icon: Brain },
+      { name: "PyTorch", icon: Bot },
+      { name: "Scikit-learn", icon: Network },
+      { name: "Neural Networks", icon: Sparkles },
+      { name: "Deep Learning", icon: TrendingUp },
+      { name: "Computer Vision", icon: Cpu },
+    ],
+  },
 ];
 
 const SkillSet = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const skillsRef = useRef<(HTMLDivElement | null)[]>([]);
-  const barsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -38,44 +79,38 @@ const SkillSet = () => {
         }
       );
 
-      skillsRef.current.forEach((skill, index) => {
-        if (skill) {
-          gsap.fromTo(
-            skill,
-            { opacity: 0, x: -30 },
-            {
-              opacity: 1,
-              x: 0,
-              duration: 0.6,
-              delay: index * 0.1,
-              ease: "power3.out",
-              scrollTrigger: {
-                trigger: skill,
-                start: "top 85%",
-              },
-            }
-          );
+      gsap.fromTo(
+        ".skill-category",
+        { opacity: 0, y: 50 },
+        {
+          opacity: 1,
+          y: 0,
+          stagger: 0.2,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".skill-category",
+            start: "top 80%",
+          },
         }
-      });
+      );
 
-      barsRef.current.forEach((bar, index) => {
-        if (bar) {
-          gsap.fromTo(
-            bar,
-            { width: "0%" },
-            {
-              width: `${skills[index].level}%`,
-              duration: 1.5,
-              delay: index * 0.1,
-              ease: "power3.out",
-              scrollTrigger: {
-                trigger: bar,
-                start: "top 85%",
-              },
-            }
-          );
+      gsap.fromTo(
+        ".skill-icon-card",
+        { opacity: 0, scale: 0.8, y: 30 },
+        {
+          opacity: 1,
+          scale: 1,
+          y: 0,
+          stagger: 0.05,
+          duration: 0.6,
+          ease: "back.out(1.7)",
+          scrollTrigger: {
+            trigger: ".skill-icon-card",
+            start: "top 85%",
+          },
         }
-      });
+      );
     }, sectionRef);
 
     return () => ctx.revert();
@@ -88,36 +123,45 @@ const SkillSet = () => {
       className="relative py-32 overflow-hidden"
     >
       <div className="grid-bg absolute inset-0 opacity-10" />
-      
-      <div className="container relative z-10 mx-auto px-6">
-        <h2
-          ref={titleRef}
-          className="text-4xl lg:text-6xl font-bold text-center mb-16 glow-text"
-        >
-          Skill Set
-        </h2>
 
-        <div className="max-w-4xl mx-auto space-y-8">
-          {skills.map((skill, index) => (
-            <div
-              key={index}
-              ref={(el) => (skillsRef.current[index] = el)}
-              className="space-y-3"
-            >
-              <div className="flex justify-between items-center">
-                <span className="text-lg font-semibold text-foreground">
-                  {skill.name}
-                </span>
-                <span className="text-sm text-primary font-medium">
-                  {skill.level}%
-                </span>
-              </div>
-              <div className="h-3 bg-muted/20 rounded-full overflow-hidden glass border border-primary/10">
-                <div
-                  ref={(el) => (barsRef.current[index] = el)}
-                  className="h-full bg-gradient-to-r from-primary to-primary/60 rounded-full shadow-lg shadow-primary/50"
-                  style={{ width: "0%" }}
-                />
+      <div className="container relative z-10 mx-auto px-6">
+        <div className="mb-16 space-y-4 text-center">
+          <h2
+            ref={titleRef}
+            className="text-4xl font-bold lg:text-5xl glow-text"
+          >
+            Skill Set
+          </h2>
+          <div className="mx-auto h-1 w-20 rounded-full bg-gradient-to-r from-glow to-glow-subtle" />
+          <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
+            Expertise across programming, data engineering, cloud infrastructure, and AI/ML technologies
+          </p>
+        </div>
+
+        <div className="space-y-16 max-w-6xl mx-auto">
+          {skillCategories.map((category, categoryIndex) => (
+            <div key={categoryIndex} className="skill-category space-y-8">
+              <h3 className="text-2xl font-bold text-center text-primary">
+                {category.title}
+              </h3>
+              
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+                {category.skills.map((skill, skillIndex) => (
+                  <div
+                    key={skillIndex}
+                    className="skill-icon-card glass-card rounded-2xl p-6 border border-primary/20 hover:border-primary/50 transition-all duration-300 group cursor-pointer flex flex-col items-center justify-center gap-4 text-center"
+                  >
+                    <div className="relative">
+                      <div className="absolute inset-0 bg-gradient-to-br from-glow/20 to-glow-subtle/20 blur-2xl rounded-full" />
+                      <div className="relative bg-primary/10 p-4 rounded-xl border border-primary/20 group-hover:bg-primary/20 transition-all duration-300">
+                        <skill.icon className="h-8 w-8 text-primary" />
+                      </div>
+                    </div>
+                    <h4 className="font-semibold text-sm text-foreground group-hover:text-primary transition-colors">
+                      {skill.name}
+                    </h4>
+                  </div>
+                ))}
               </div>
             </div>
           ))}
