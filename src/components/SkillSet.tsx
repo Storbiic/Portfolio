@@ -70,8 +70,8 @@ const SkillSet = () => {
         {
           opacity: 1,
           y: 0,
-          duration: 1,
-          ease: "power3.out",
+          duration: 1.5,
+          ease: "power2.out",
           scrollTrigger: {
             trigger: titleRef.current,
             start: "top 80%",
@@ -85,9 +85,9 @@ const SkillSet = () => {
         {
           opacity: 1,
           y: 0,
-          stagger: 0.2,
-          duration: 0.8,
-          ease: "power3.out",
+          stagger: 0.25,
+          duration: 1.2,
+          ease: "power2.out",
           scrollTrigger: {
             trigger: ".skill-category",
             start: "top 80%",
@@ -102,9 +102,9 @@ const SkillSet = () => {
           opacity: 1,
           scale: 1,
           y: 0,
-          stagger: 0.05,
-          duration: 0.6,
-          ease: "back.out(1.7)",
+          stagger: 0.08,
+          duration: 1,
+          ease: "elastic.out(1, 0.6)",
           scrollTrigger: {
             trigger: ".skill-icon-card",
             start: "top 85%",

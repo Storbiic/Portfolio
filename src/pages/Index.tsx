@@ -1,7 +1,7 @@
 import { useState } from "react";
 import LoadingScreen from "@/components/LoadingScreen";
 import Navbar from "@/components/Navbar";
-import CursorFollower from "@/components/CursorFollower";
+
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Experience from "@/components/Experience";
@@ -36,7 +36,6 @@ const Index = () => {
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/20 to-background/60 pointer-events-none" />
           </div>
           
-          <CursorFollower />
           <Navbar />
           <main className="relative z-10">
             <Hero />

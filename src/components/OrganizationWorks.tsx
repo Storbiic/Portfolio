@@ -39,8 +39,8 @@ const OrganizationWorks = () => {
         {
           opacity: 1,
           y: 0,
-          duration: 1,
-          ease: "power3.out",
+          duration: 1.5,
+          ease: "power2.out",
           scrollTrigger: {
             trigger: titleRef.current,
             start: "top 80%",
@@ -57,9 +57,9 @@ const OrganizationWorks = () => {
               opacity: 1,
               y: 0,
               rotateX: 0,
-              duration: 0.8,
-              delay: index * 0.2,
-              ease: "power3.out",
+              duration: 1.2,
+              delay: index * 0.15,
+              ease: "power2.out",
               scrollTrigger: {
                 trigger: card,
                 start: "top 85%",

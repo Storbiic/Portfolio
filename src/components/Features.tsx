@@ -51,8 +51,8 @@ const Features = () => {
         {
           opacity: 1,
           y: 0,
-          duration: 1,
-          ease: "power3.out",
+          duration: 1.5,
+          ease: "power2.out",
           scrollTrigger: {
             trigger: titleRef.current,
             start: "top 80%",
@@ -69,9 +69,9 @@ const Features = () => {
               opacity: 1,
               scale: 1,
               y: 0,
-              duration: 0.6,
-              delay: index * 0.1,
-              ease: "back.out(1.7)",
+              duration: 1,
+              delay: index * 0.12,
+              ease: "elastic.out(1, 0.6)",
               scrollTrigger: {
                 trigger: card,
                 start: "top 85%",

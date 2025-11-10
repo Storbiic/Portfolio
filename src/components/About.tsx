@@ -27,10 +27,11 @@ const About = () => {
           opacity: 1,
           x: 0,
           filter: "blur(0px)",
-          duration: 1,
+          duration: 1.8,
+          ease: "power2.out",
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: "top 70%",
+            start: "top 75%",
           },
         }
       );
@@ -41,10 +42,11 @@ const About = () => {
         {
           opacity: 1,
           y: 0,
-          duration: 1,
+          duration: 1.5,
+          ease: "power1.out",
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: "top 70%",
+            start: "top 75%",
           },
         }
       );
@@ -56,12 +58,12 @@ const About = () => {
           opacity: 1,
           y: 0,
           scale: 1,
-          stagger: 0.1,
-          duration: 0.6,
-          ease: "back.out(1.7)",
+          stagger: 0.15,
+          duration: 1,
+          ease: "elastic.out(1, 0.6)",
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: "top 60%",
+            start: "top 65%",
           },
         }
       );

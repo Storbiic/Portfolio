@@ -17,19 +17,19 @@ const Hero = () => {
       tl.fromTo(
         headlineRef.current,
         { opacity: 0, y: 50, filter: "blur(10px)" },
-        { opacity: 1, y: 0, filter: "blur(0px)", duration: 1, ease: "power3.out" }
+        { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.5, ease: "power2.out" }
       )
         .fromTo(
           subtitleRef.current,
           { opacity: 0, y: 30 },
-          { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" },
-          "-=0.5"
+          { opacity: 1, y: 0, duration: 1.2, ease: "power1.out" },
+          "-=0.8"
         )
         .fromTo(
           ctaRef.current,
           { opacity: 0, scale: 0.9 },
-          { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.7)" },
-          "-=0.4"
+          { opacity: 1, scale: 1, duration: 1, ease: "elastic.out(1, 0.5)" },
+          "-=0.6"
         )
         .fromTo(
           splineRef.current,

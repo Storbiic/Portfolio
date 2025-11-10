@@ -65,12 +65,12 @@ const Projects = () => {
           opacity: 1,
           y: 0,
           scale: 1,
-          stagger: 0.15,
-          duration: 0.8,
-          ease: "power3.out",
+          stagger: 0.2,
+          duration: 1.2,
+          ease: "power2.out",
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: "top 60%",
+            start: "top 65%",
           },
         }
       );
