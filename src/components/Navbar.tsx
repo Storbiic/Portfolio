@@ -66,7 +66,7 @@ const Navbar = () => {
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }}
             >
-              Portfolio - Najar Saad
+              Portfolio
             </a>
 
             {/* Desktop Nav */}
