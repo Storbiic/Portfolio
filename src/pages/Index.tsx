@@ -31,7 +31,9 @@ const Index = () => {
               src="https://my.spline.design/liquidglass-rM3o93P8ISaWcg143hDOgO2T-RtD/"
               className="h-full w-full"
               title="Liquid Glass 3D Background"
+              style={{ border: 0 }}
             />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/20 to-background/60 pointer-events-none" />
           </div>
           
           <CursorFollower />

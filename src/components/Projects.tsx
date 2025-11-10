@@ -108,7 +108,7 @@ const Projects = () => {
             {projects.map((project, index) => (
               <div
                 key={index}
-                className="project-card glass group relative w-[400px] flex-shrink-0 overflow-hidden rounded-2xl border border-primary/20 hover:border-primary/50 transition-all duration-500"
+                className="project-card glass-card group relative w-[400px] flex-shrink-0 overflow-hidden rounded-2xl border border-primary/20 hover:border-primary/50 transition-all duration-500"
               >
                 {/* Image */}
                 <div className="relative h-64 overflow-hidden">

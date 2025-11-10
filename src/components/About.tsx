@@ -85,7 +85,7 @@ const About = () => {
           <div ref={imageRef} className="relative">
             <div className="relative aspect-square max-w-md mx-auto">
               <div className="absolute inset-0 rounded-full bg-gradient-to-br from-glow via-glow-subtle to-transparent opacity-20 blur-2xl animate-pulse" />
-              <div className="glass relative overflow-hidden rounded-full border-2 border-primary/30 p-4 group hover:scale-105 transition-transform duration-500">
+              <div className="glass-card relative overflow-hidden rounded-full border-2 border-primary/30 p-4 group hover:scale-105 transition-transform duration-500">
                 <img
                   src={profileImg}
                   alt="NAJAR Saad"
@@ -123,7 +123,7 @@ const About = () => {
               {skills.map((skill, index) => (
                 <div
                   key={index}
-                  className="skill-card glass rounded-xl p-6 border border-primary/20 hover:border-primary/50 transition-all duration-300 group cursor-pointer"
+                  className="skill-card glass-card rounded-xl p-6 border border-primary/20 hover:border-primary/50 transition-all duration-300 group cursor-pointer"
                 >
                   <div className={`inline-flex p-3 rounded-lg bg-gradient-to-br ${skill.color} mb-3`}>
                     <skill.icon className="h-6 w-6 text-white" />

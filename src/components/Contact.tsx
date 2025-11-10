@@ -86,7 +86,7 @@ const Contact = () => {
         <div className="grid gap-12 lg:grid-cols-2">
           {/* Left: Contact info */}
           <div className="space-y-8">
-            <div className="contact-item glass rounded-2xl p-8 border border-primary/20 space-y-6">
+            <div className="contact-item glass-card rounded-2xl p-8 border border-primary/20 space-y-6">
               <h3 className="text-2xl font-bold text-foreground">Contact Info</h3>
               
               <div className="space-y-4">
@@ -123,7 +123,7 @@ const Contact = () => {
             </div>
 
             {/* Floating orbs */}
-            <div className="contact-item relative h-64 overflow-hidden rounded-2xl border border-primary/20 glass">
+            <div className="contact-item relative h-64 overflow-hidden rounded-2xl border border-primary/20 glass-card">
               <div className="absolute top-1/4 left-1/4 h-32 w-32 rounded-full bg-glow/20 blur-3xl animate-float" />
               <div className="absolute bottom-1/4 right-1/4 h-40 w-40 rounded-full bg-glow-subtle/20 blur-3xl animate-float" style={{ animationDelay: "1s" }} />
               <div className="flex h-full items-center justify-center">
@@ -139,7 +139,7 @@ const Contact = () => {
             <form
               ref={formRef}
               onSubmit={handleSubmit}
-              className="glass rounded-2xl p-8 border border-primary/20 space-y-6"
+              className="glass-card rounded-2xl p-8 border border-primary/20 space-y-6"
             >
               <h3 className="text-2xl font-bold text-foreground">Send Message</h3>
               

@@ -51,7 +51,7 @@ const Navbar = () => {
         ref={navRef}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? "glass backdrop-blur-xl border-b border-border/50"
+            ? "glass-card backdrop-blur-xl border-b border-border/50"
             : "bg-transparent"
         }`}
       >
@@ -103,7 +103,7 @@ const Navbar = () => {
       {isMobileMenuOpen && (
         <div
           ref={mobileMenuRef}
-          className="fixed inset-0 z-40 lg:hidden glass backdrop-blur-xl"
+          className="fixed inset-0 z-40 lg:hidden glass-card backdrop-blur-xl"
           style={{ paddingTop: "80px" }}
         >
           <div className="flex flex-col items-center gap-6 p-8">
