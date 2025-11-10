@@ -25,9 +25,18 @@ const Index = () => {
       
       {!loading && (
         <>
+          {/* Fixed Spline 3D Background */}
+          <div className="fixed inset-0 z-0">
+            <iframe
+              src="https://my.spline.design/liquidglass-rM3o93P8ISaWcg143hDOgO2T-RtD/"
+              className="h-full w-full"
+              title="Liquid Glass 3D Background"
+            />
+          </div>
+          
           <CursorFollower />
           <Navbar />
-          <main className="relative">
+          <main className="relative z-10">
             <Hero />
             <About />
             <Experience />

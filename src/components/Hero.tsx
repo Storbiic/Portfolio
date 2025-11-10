@@ -56,9 +56,9 @@ const Hero = () => {
       <div className="absolute bottom-1/4 right-1/4 h-80 w-80 rounded-full bg-glow-subtle/5 blur-3xl animate-float" style={{ animationDelay: "1.5s" }} />
 
       <div className="container relative z-10 mx-auto px-6">
-        <div className="grid items-center gap-12 lg:grid-cols-2">
-          {/* Left content */}
-          <div className="space-y-8">
+        <div className="flex items-center justify-center min-h-[calc(100vh-8rem)]">
+          {/* Center content */}
+          <div className="space-y-8 max-w-4xl mx-auto text-center">
             <div className="space-y-4">
               <p className="text-sm font-medium tracking-widest text-primary uppercase">
                 Introducing
@@ -77,12 +77,12 @@ const Hero = () => {
               </p>
             </div>
 
-            <p className="max-w-lg text-lg leading-relaxed text-foreground/80">
+            <p className="max-w-2xl mx-auto text-lg leading-relaxed text-foreground/80">
               Crafting intelligent solutions through machine learning, deep learning,
               and cutting-edge AI technologies. Transforming data into actionable insights.
             </p>
 
-            <div ref={ctaRef} className="flex flex-wrap items-center gap-4">
+            <div ref={ctaRef} className="flex flex-wrap items-center justify-center gap-4">
               <Button
                 size="lg"
                 className="group bg-primary text-primary-foreground hover:bg-primary/90 glow magnetic-btn"
@@ -113,19 +113,6 @@ const Hero = () => {
                 </Button>
               </div>
             </div>
-          </div>
-
-          {/* Right: Spline 3D - Liquid Glass */}
-          <div
-            ref={splineRef}
-            className="relative h-[500px] lg:h-[600px]"
-          >
-            <iframe
-              src="https://my.spline.design/liquidglass-rM3o93P8ISaWcg143hDOgO2T-RtD/"
-              className="h-full w-full rounded-2xl border border-primary/20 glass"
-              title="Liquid Glass 3D"
-            />
-            <div className="absolute -inset-4 rounded-2xl bg-gradient-to-r from-glow/10 to-glow-subtle/10 blur-2xl -z-10" />
           </div>
         </div>
       </div>
