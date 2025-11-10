@@ -5,19 +5,17 @@ import {
   Code2,
   Database,
   Cloud,
-  Server,
   Container,
   FileCode,
   Brain,
   Bot,
-  Network,
   Sparkles,
-  TrendingUp,
-  Cpu,
-  FileJson,
-  Braces,
-  Terminal,
-  Package,
+  Eye,
+  Layers,
+  GitBranch,
+  BarChart3,
+  Share2,
+  MessageSquare,
 } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -27,33 +25,34 @@ const skillCategories = [
     title: "Programming Languages",
     skills: [
       { name: "Python", icon: Code2 },
-      { name: "JavaScript", icon: FileJson },
-      { name: "TypeScript", icon: Braces },
-      { name: "Java", icon: Terminal },
-      { name: "C++", icon: Code2 },
-      { name: "R", icon: FileCode },
+      { name: "SQL", icon: Database },
+      { name: "C/C++", icon: FileCode },
+      { name: "C#", icon: Code2 },
     ],
   },
   {
     title: "Data & Cloud",
     skills: [
-      { name: "PostgreSQL", icon: Database },
-      { name: "AWS", icon: Cloud },
-      { name: "Docker", icon: Container },
-      { name: "Kubernetes", icon: Server },
+      { name: "SQL Server", icon: Database },
       { name: "MongoDB", icon: Database },
-      { name: "Apache Spark", icon: Package },
+      { name: "Azure AI", icon: Cloud },
+      { name: "GCP", icon: Cloud },
+      { name: "Docker", icon: Container },
+      { name: "Power BI", icon: BarChart3 },
+      { name: "SharePoint", icon: Share2 },
     ],
   },
   {
     title: "AI & ML",
     skills: [
-      { name: "TensorFlow", icon: Brain },
-      { name: "PyTorch", icon: Bot },
-      { name: "Scikit-learn", icon: Network },
-      { name: "Neural Networks", icon: Sparkles },
-      { name: "Deep Learning", icon: TrendingUp },
-      { name: "Computer Vision", icon: Cpu },
+      { name: "PyTorch", icon: Brain },
+      { name: "TensorFlow", icon: Bot },
+      { name: "Hugging Face", icon: Sparkles },
+      { name: "LangChain", icon: Layers },
+      { name: "FAISS", icon: GitBranch },
+      { name: "LLMs", icon: MessageSquare },
+      { name: "RAG Systems", icon: Layers },
+      { name: "Computer Vision", icon: Eye },
     ],
   },
 ];
@@ -145,7 +144,7 @@ const SkillSet = () => {
                 {category.title}
               </h3>
               
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {category.skills.map((skill, skillIndex) => (
                   <div
                     key={skillIndex}

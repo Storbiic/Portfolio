@@ -1,28 +1,28 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Building2, Users, Award } from "lucide-react";
+import { Presentation, Github, Briefcase } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const organizations = [
   {
-    name: "AI Research Lab",
-    role: "Research Contributor",
-    description: "Contributing to open-source AI research and publishing papers on neural architectures.",
-    icon: Building2,
+    name: "Big Data & AI Workshop",
+    role: "Organizing Committee",
+    description: "Organized the International Workshop on Big Data and AI Applications (2023), coordinating technical sessions and facilitating knowledge exchange among researchers and practitioners.",
+    icon: Presentation,
   },
   {
-    name: "Tech Community",
-    role: "Speaker & Mentor",
-    description: "Speaking at conferences and mentoring aspiring data scientists and developers.",
-    icon: Users,
+    name: "Open Source Contributor",
+    role: "AI/ML Developer",
+    description: "Contributing to open-source AI projects and sharing implementations of RAG systems, LLM applications, and data engineering solutions on GitHub.",
+    icon: Github,
   },
   {
-    name: "Innovation Hub",
-    role: "Consultant",
-    description: "Advising startups on AI/ML strategy and technical implementation.",
-    icon: Award,
+    name: "Freelance AI Consultant",
+    role: "Technical Advisor",
+    description: "Delivering AI-powered solutions for manufacturing and quality management, helping organizations implement intelligent automation and data-driven decision systems.",
+    icon: Briefcase,
   },
 ];
 
@@ -86,7 +86,7 @@ const OrganizationWorks = () => {
           ref={titleRef}
           className="text-4xl lg:text-6xl font-bold text-center mb-16 glow-text"
         >
-          Organization Works
+          Beyond the Code
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">

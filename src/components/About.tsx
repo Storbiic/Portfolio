@@ -22,7 +22,7 @@ const About = () => {
     const ctx = gsap.context(() => {
       gsap.fromTo(
         imageRef.current,
-        { opacity: 0, x: -100, filter: "blur(10px)" },
+        { opacity: 0, x: 100, filter: "blur(10px)" },
         {
           opacity: 1,
           x: 0,
@@ -38,10 +38,10 @@ const About = () => {
 
       gsap.fromTo(
         contentRef.current,
-        { opacity: 0, y: 50 },
+        { opacity: 0, x: -50 },
         {
           opacity: 1,
-          y: 0,
+          x: 0,
           duration: 1.5,
           ease: "power1.out",
           scrollTrigger: {
@@ -82,43 +82,30 @@ const About = () => {
       <div className="grid-bg absolute inset-0 opacity-10" />
       
       <div className="container relative z-10 mx-auto px-6">
-        <div className="grid items-center gap-16 lg:grid-cols-2">
-          {/* Left: Profile image */}
-          <div ref={imageRef} className="relative">
-            <div className="relative aspect-square max-w-md mx-auto">
-              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-glow via-glow-subtle to-transparent opacity-20 blur-2xl animate-pulse" />
-              <div className="glass-card relative overflow-hidden rounded-full border-2 border-primary/30 p-4 group hover:scale-105 transition-transform duration-500">
-                <img
-                  src={profileImg}
-                  alt="NAJAR Saad"
-                  className="h-full w-full object-cover rounded-full"
-                />
-                <div className="absolute inset-0 rounded-full bg-gradient-to-t from-background/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              </div>
-            </div>
-          </div>
-
-          {/* Right: Bio & Skills */}
+        <div className="max-w-4xl mx-auto">
+          {/* Bio & Skills */}
           <div ref={contentRef} className="space-y-8">
-            <div className="space-y-4">
-              <h2 className="text-4xl font-bold lg:text-5xl glow-text">
-                About Me
-              </h2>
-              <div className="h-1 w-20 rounded-full bg-gradient-to-r from-glow to-glow-subtle" />
+            <div className="glass-card rounded-2xl p-8 border border-primary/20 space-y-6">
+              <div className="space-y-4">
+                <h2 className="text-4xl font-bold lg:text-5xl glow-text">
+                  About Me
+                </h2>
+                <div className="h-1 w-20 rounded-full bg-gradient-to-r from-glow to-glow-subtle" />
+              </div>
+
+              <p className="text-lg leading-relaxed text-foreground/80">
+                I'm a passionate Data Scientist and AI Engineer specializing in building
+                intelligent systems that solve real-world problems. With expertise in
+                machine learning, deep learning, and advanced analytics, I transform
+                complex data into actionable insights.
+              </p>
+
+              <p className="text-lg leading-relaxed text-foreground/80">
+                My work focuses on creating scalable AI solutions, developing predictive
+                models, and leveraging cutting-edge technologies to drive innovation and
+                business growth.
+              </p>
             </div>
-
-            <p className="text-lg leading-relaxed text-foreground/80">
-              I'm a passionate Data Scientist and AI Engineer specializing in building
-              intelligent systems that solve real-world problems. With expertise in
-              machine learning, deep learning, and advanced analytics, I transform
-              complex data into actionable insights.
-            </p>
-
-            <p className="text-lg leading-relaxed text-foreground/80">
-              My work focuses on creating scalable AI solutions, developing predictive
-              models, and leveraging cutting-edge technologies to drive innovation and
-              business growth.
-            </p>
 
             {/* Skills grid */}
             <div className="grid grid-cols-2 gap-4 pt-4">

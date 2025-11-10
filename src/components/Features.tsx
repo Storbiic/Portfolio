@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Brain, Code, Zap, Shield, Rocket, Database } from "lucide-react";
+import { Brain, Database, Bot, Code, BarChart3, Boxes } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -9,32 +9,32 @@ const features = [
   {
     icon: Brain,
     title: "AI & Machine Learning",
-    description: "Advanced neural networks and deep learning solutions",
-  },
-  {
-    icon: Code,
-    title: "Full-Stack Development",
-    description: "Modern web applications with React, TypeScript, and Node.js",
-  },
-  {
-    icon: Zap,
-    title: "Performance Optimization",
-    description: "Lightning-fast applications with optimal user experience",
-  },
-  {
-    icon: Shield,
-    title: "Secure Solutions",
-    description: "Enterprise-grade security and data protection",
-  },
-  {
-    icon: Rocket,
-    title: "Scalable Architecture",
-    description: "Systems designed to grow with your business",
+    description: "LLM fine-tuning, RAG systems, and deep learning solutions for document extraction and intelligent automation",
   },
   {
     icon: Database,
     title: "Data Engineering",
-    description: "Robust data pipelines and analytics infrastructure",
+    description: "Robust ETL pipelines, data automation, and analytics infrastructure with cloud integration",
+  },
+  {
+    icon: Bot,
+    title: "AI-Powered Applications",
+    description: "Production-ready chatbots, document extraction systems, and intelligent assistants using LangChain and vector databases",
+  },
+  {
+    icon: Code,
+    title: "Backend Development",
+    description: "Scalable microservices with .NET Core, FastAPI, and cloud deployment on Azure and GCP",
+  },
+  {
+    icon: BarChart3,
+    title: "Business Intelligence",
+    description: "Advanced analytics, KPI dashboards, and automated reporting with Power BI and SQL optimization",
+  },
+  {
+    icon: Boxes,
+    title: "MLOps & Deployment",
+    description: "Model deployment, Docker containerization, and end-to-end ML pipeline management with Azure AI",
   },
 ];
 

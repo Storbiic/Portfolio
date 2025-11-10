@@ -67,7 +67,7 @@ const Hero = () => {
                 ref={headlineRef}
                 className="text-5xl font-bold leading-tight lg:text-7xl glow-text"
               >
-                Hi, I'm NAJAR Saad
+                Hi, I'm Saad Najar
               </h1>
               <p
                 ref={subtitleRef}
@@ -87,29 +87,38 @@ const Hero = () => {
                 size="lg"
                 className="group bg-primary text-primary-foreground hover:bg-primary/90 glow magnetic-btn"
               >
-                <a href="#contact">Hire Me</a>
+                <a href="#contact">Let's get in touch</a>
               </Button>
               <div className="flex gap-3">
                 <Button
                   size="icon"
                   variant="outline"
                   className="border-primary/30 hover:bg-primary/10 hover:border-primary magnetic-btn"
+                  asChild
                 >
-                  <Github className="h-5 w-5" />
+                  <a href="https://github.com/Storbiic" target="_blank" rel="noopener noreferrer">
+                    <Github className="h-5 w-5" />
+                  </a>
                 </Button>
                 <Button
                   size="icon"
                   variant="outline"
                   className="border-primary/30 hover:bg-primary/10 hover:border-primary magnetic-btn"
+                  asChild
                 >
-                  <Linkedin className="h-5 w-5" />
+                  <a href="https://www.linkedin.com/in/saad-najar/" target="_blank" rel="noopener noreferrer">
+                    <Linkedin className="h-5 w-5" />
+                  </a>
                 </Button>
                 <Button
                   size="icon"
                   variant="outline"
                   className="border-primary/30 hover:bg-primary/10 hover:border-primary magnetic-btn"
+                  asChild
                 >
-                  <Mail className="h-5 w-5" />
+                  <a href="mailto:saadnajar@icloud.com">
+                    <Mail className="h-5 w-5" />
+                  </a>
                 </Button>
               </div>
             </div>

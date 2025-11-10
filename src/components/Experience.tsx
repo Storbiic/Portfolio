@@ -7,22 +7,40 @@ gsap.registerPlugin(ScrollTrigger);
 
 const experiences = [
   {
-    title: "Senior AI Engineer",
-    company: "Tech Innovations Inc.",
-    period: "2022 - Present",
-    description: "Leading AI/ML projects, developing cutting-edge solutions using deep learning and NLP.",
+    title: "Data Scientist & AI Engineer (Freelance)",
+    company: "Yazaki Morocco",
+    location: "Kenitra, Morocco",
+    period: "August 2025 - Present",
+    project: "AI-Powered Supplier Quality Assistant",
+    description: "Engineered an intelligent RAG-based chatbot that revolutionized supplier-quality team communication by providing instant, accurate responses to quality standards inquiries. The system empowers suppliers to independently access critical quality information while significantly enhancing ASQE productivity by reducing repetitive inquiries by 70%.",
+    techStack: ["Python", "LangChain", "Ollama", "FAISS", "FastAPI", "MongoDB", "Gradio"],
+  },
+  {
+    title: "Data Analyst (Freelance)",
+    company: "Yazaki Morocco",
+    location: "Kenitra, Morocco",
+    period: "May 2025 - July 2025",
+    project: "Automated BOM Management & ETL Pipeline",
+    description: "Transformed a manual, time-intensive Excel workflow into an automated data pipeline that reduced processing time from 2 hours to under 20 minutes—an 83% efficiency gain. Developed a full-stack ETL web application with cloud integration for real-time Power BI dashboards.",
+    techStack: ["Python", "FastAPI", "Power BI", "SQL", "SharePoint", "GCP"],
+  },
+  {
+    title: "Data Scientist & AI Engineer",
+    company: "Revartis",
+    location: "Marrakech, Morocco",
+    period: "February 2024 - March 2025",
+    project: "AI Document Extraction & Intelligent Chatbots",
+    description: "Led the development of enterprise-grade AI solutions for automated document processing, achieving a 60% boost in extraction accuracy. Designed and deployed custom table extraction models and conversational AI systems using state-of-the-art LLMs with scalable microservices architecture.",
+    techStack: ["Python", "PyTorch", "Hugging Face", "LangChain", "Azure AI", "Docker", ".NET Core"],
   },
   {
     title: "Data Scientist",
-    company: "DataVerse Solutions",
-    period: "2020 - 2022",
-    description: "Built predictive models and data pipelines for large-scale analytics.",
-  },
-  {
-    title: "Machine Learning Engineer",
-    company: "AI StartUp",
-    period: "2018 - 2020",
-    description: "Developed computer vision models and deployed ML systems in production.",
+    company: "Customs Administration & Indirect Taxes",
+    location: "Rabat, Morocco",
+    period: "April 2023 - December 2023",
+    project: "Customs Fraud Detection System",
+    description: "Developed machine learning models for automated fraud detection in customs operations, achieving 85% accuracy. Implemented end-to-end ETL pipelines with automated data preprocessing and built SQL databases optimized for model training.",
+    techStack: ["Python", "TensorFlow", "ETL", "SQL Server", "Power BI", "Cognos"],
   },
 ];
 
@@ -99,18 +117,45 @@ const Experience = () => {
                 <div className="p-3 rounded-xl bg-primary/10 border border-primary/20">
                   <Briefcase className="w-6 h-6 text-primary" />
                 </div>
-                <div className="flex-1">
-                  <h3 className="text-2xl font-bold text-foreground mb-2">
-                    {exp.title}
-                  </h3>
-                  <p className="text-primary font-medium mb-2">{exp.company}</p>
-                  <div className="flex items-center gap-2 text-muted-foreground mb-4">
-                    <Calendar className="w-4 h-4" />
-                    <span>{exp.period}</span>
+                <div className="flex-1 space-y-4">
+                  <div>
+                    <h3 className="text-2xl font-bold text-foreground mb-2">
+                      {exp.title}
+                    </h3>
+                    <p className="text-primary font-semibold text-lg">{exp.company}</p>
+                    {exp.location && (
+                      <p className="text-muted-foreground text-base font-medium">{exp.location}</p>
+                    )}
+                    <div className="flex items-center gap-2 text-muted-foreground mt-2">
+                      <Calendar className="w-4 h-4" />
+                      <span>{exp.period}</span>
+                    </div>
                   </div>
+
+                  {exp.project && (
+                    <div className="pt-2">
+                      <h4 className="text-xl font-bold text-foreground/90 mb-2">
+                        {exp.project}
+                      </h4>
+                    </div>
+                  )}
+
                   <p className="text-foreground/80 leading-relaxed">
                     {exp.description}
                   </p>
+
+                  {exp.techStack && exp.techStack.length > 0 && (
+                    <div className="flex flex-wrap gap-2 pt-3">
+                      {exp.techStack.map((tech, techIndex) => (
+                        <span
+                          key={techIndex}
+                          className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary border border-primary/20"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

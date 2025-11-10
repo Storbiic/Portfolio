@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Github, Linkedin, Mail, Twitter } from "lucide-react";
+import { Github, Linkedin, Mail } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -42,25 +42,23 @@ const Footer = () => {
           {/* Social links */}
           <div className="flex gap-4">
             <a
-              href="#"
+              href="https://github.com/Storbiic"
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex h-12 w-12 items-center justify-center rounded-full border border-primary/30 bg-background/50 backdrop-blur transition-all hover:border-primary hover:bg-primary/10 hover:scale-110"
             >
               <Github className="h-5 w-5" />
             </a>
             <a
-              href="#"
+              href="https://www.linkedin.com/in/saad-najar/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex h-12 w-12 items-center justify-center rounded-full border border-primary/30 bg-background/50 backdrop-blur transition-all hover:border-primary hover:bg-primary/10 hover:scale-110"
             >
               <Linkedin className="h-5 w-5" />
             </a>
             <a
-              href="#"
-              className="flex h-12 w-12 items-center justify-center rounded-full border border-primary/30 bg-background/50 backdrop-blur transition-all hover:border-primary hover:bg-primary/10 hover:scale-110"
-            >
-              <Twitter className="h-5 w-5" />
-            </a>
-            <a
-              href="#"
+              href="mailto:saadnajar@icloud.com"
               className="flex h-12 w-12 items-center justify-center rounded-full border border-primary/30 bg-background/50 backdrop-blur transition-all hover:border-primary hover:bg-primary/10 hover:scale-110"
             >
               <Mail className="h-5 w-5" />
@@ -83,8 +81,7 @@ const Footer = () => {
           {/* Copyright */}
           <div className="text-center">
             <p className="text-sm text-muted-foreground">
-              © 2025 NAJAR Saad. Made with{" "}
-              <span className="text-primary">❤</span> by MiladiCode
+              © 2025 Saad Najar. All rights reserved.
             </p>
           </div>
         </div>

@@ -4,11 +4,11 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, Github } from "lucide-react";
 
-import project1 from "@/assets/project-1.png";
-import project2 from "@/assets/project-2.png";
-import project3 from "@/assets/project-3.png";
-import project4 from "@/assets/project-4.png";
-import project5 from "@/assets/project-5.png";
+import project1 from "@/assets/Brain_tumor.webp";
+import project2 from "@/assets/breast_cancer.webp";
+import project3 from "@/assets/etl_dashboard.png";
+import project4 from "@/assets/movie_recom.jpg";
+import project5 from "@/assets/orange_money.png";
 import project6 from "@/assets/project-6.png";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -20,40 +20,46 @@ const Projects = () => {
   const projects = [
     {
       image: project1,
-      title: "3D Interactive Web",
-      description: "Email platform for developers with cutting-edge 3D interactions",
-      tags: ["React", "Three.js", "GSAP"],
+      title: "Brain Tumor Detection",
+      description: "Deep Learning system for brain tumor detection on 3D MRI dataset using ResNet, 3DUnit, and 3D AutoEncoder architectures",
+      tags: ["Python", "TensorFlow", "3D CNN"],
+      github: "https://github.com/Storbiic/Brain_Tumor_Detection",
     },
     {
       image: project2,
-      title: "Gaming UI Platform",
-      description: "Next-level gaming interface with immersive 3D elements",
-      tags: ["React", "WebGL", "Spline"],
+      title: "Breast Cancer Detection",
+      description: "Web application for breast cancer detection using machine learning algorithms with interactive UI",
+      tags: ["Python", "Scikit-learn", "Flask"],
+      github: "https://github.com/Storbiic/Breast_Cancer_Detection",
     },
     {
       image: project3,
-      title: "3D Portfolio",
-      description: "Professional developer portfolio with advanced 3D animations",
-      tags: ["HTML", "CSS", "JavaScript"],
+      title: "ETL Dashboard",
+      description: "Automated ETL Integration Hub with real-time data processing and visualization capabilities",
+      tags: ["Python", "ETL", "Dashboard"],
+      github: "https://github.com/Storbiic/ETL_Dashboard",
     },
     {
       image: project4,
-      title: "Gaming Website",
-      description: "Dynamic gaming platform with stunning visual effects",
-      tags: ["React", "Tailwind", "GSAP"],
+      title: "Movie Recommendation System",
+      description: "Collaborative filtering-based recommendation system built with R for personalized movie suggestions",
+      tags: ["R", "Machine Learning", "Collaborative Filtering"],
+      github: "https://github.com/Storbiic/Movie-Recommendation-system-using-R-based-on-collaboratif-filtering-",
     },
     {
       image: project5,
-      title: "Animation Tools",
-      description: "Educational platform for web animation techniques",
-      tags: ["React", "GSAP", "Framer"],
+      title: "Orange Money Application",
+      description: "Mobile money transfer application simulation developed using MATLAB with GUI interface",
+      tags: ["MATLAB", "GUI", "Financial Tech"],
+      github: "https://github.com/Storbiic/Orang-Money_application_using_MATLAP",
     },
-    {
+    /*{
       image: project6,
-      title: "Animated Portfolio",
-      description: "Step-by-step tutorial portfolio with smooth animations",
-      tags: ["HTML", "CSS", "JS"],
-    },
+      title: "ETL Automated SharePoint",
+      description: "Automated ETL Integration Hub using SharePoint functionality for seamless data flow",
+      tags: ["Python", "SharePoint", "Automation"],
+      github: "https://github.com/Storbiic/ETL_Automated_SP",
+    },*/
   ];
 
   useEffect(() => {
@@ -121,19 +127,17 @@ const Projects = () => {
                   
                   {/* Overlay buttons */}
                   <div className="absolute inset-0 flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <Button
-                      size="icon"
-                      className="bg-primary/90 hover:bg-primary glow"
-                    >
-                      <ExternalLink className="h-5 w-5" />
-                    </Button>
-                    <Button
-                      size="icon"
-                      variant="outline"
-                      className="border-primary/50 bg-background/50 backdrop-blur hover:bg-primary/10"
-                    >
-                      <Github className="h-5 w-5" />
-                    </Button>
+                    {project.github && (
+                      <Button
+                        size="icon"
+                        className="bg-primary/90 hover:bg-primary glow"
+                        asChild
+                      >
+                        <a href={project.github} target="_blank" rel="noopener noreferrer">
+                          <Github className="h-5 w-5" />
+                        </a>
+                      </Button>
+                    )}
                   </div>
                 </div>
 

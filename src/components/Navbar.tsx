@@ -66,7 +66,7 @@ const Navbar = () => {
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }}
             >
-              NS
+              Portfolio
             </a>
 
             {/* Desktop Nav */}

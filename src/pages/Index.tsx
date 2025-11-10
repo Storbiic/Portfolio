@@ -34,6 +34,8 @@ const Index = () => {
               style={{ border: 0 }}
             />
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/20 to-background/60 pointer-events-none" />
+            {/* Hide Spline watermark */}
+            <div className="absolute bottom-0 right-0 w-48 h-16 bg-background/90 pointer-events-none z-10" />
           </div>
           
           <Navbar />
