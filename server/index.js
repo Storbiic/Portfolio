@@ -16,7 +16,9 @@ app.use(cors({
     'http://localhost:4173',
     'http://127.0.0.1:8080',
     'http://127.0.0.1:5173',
-    'http://127.0.0.1:4173'
+    'http://127.0.0.1:4173',
+    'https://saadnajar.vercel.app',
+    /\.vercel\.app$/  // Allow all Vercel preview deployments
   ],
   credentials: true
 }));
