@@ -181,7 +181,8 @@ jobs:
           password: ${{ secrets.SMTP_PASS }}
           subject: '🚨 CRITICAL: Portfolio Deployment Failed - ${{ github.repository }}'
           to: ${{ secrets.RECIPIENT_EMAIL }}
-          from: ${{ secrets.SMTP_USER }}
+          from: 'Portfolio CI/CD <${{ secrets.SMTP_USER }}>'
+          content_type: text/html
           html_body: |
             <!DOCTYPE html>
             <html>
@@ -276,7 +277,8 @@ jobs:
           password: ${{ secrets.SMTP_PASS }}
           subject: '✅ Portfolio Deployment Successful - ${{ github.repository }}'
           to: ${{ secrets.RECIPIENT_EMAIL }}
-          from: ${{ secrets.SMTP_USER }}
+          from: 'Portfolio CI/CD <${{ secrets.SMTP_USER }}>'
+          content_type: text/html
           html_body: |
             <!DOCTYPE html>
             <html>
