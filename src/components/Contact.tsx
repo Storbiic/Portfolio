@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { API_ENDPOINTS } from "@/lib/api";
+import { API_ENDPOINTS, isApiConfigured } from "@/lib/api";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -59,6 +59,18 @@ const Contact = () => {
       return;
     }
 
+    // Check if API is configured
+    if (!isApiConfigured() || !API_ENDPOINTS.SEND_EMAIL) {
+      toast({
+        title: "Service Unavailable",
+        description: "Contact form is temporarily unavailable. Please email me directly at saadnajar@icloud.com",
+        variant: "destructive",
+      });
+      // Open email client as fallback
+      window.location.href = `mailto:saadnajar@icloud.com?subject=Portfolio Contact from ${formData.name}&body=${encodeURIComponent(formData.message)}%0D%0A%0D%0AFrom: ${formData.email}`;
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -93,9 +105,15 @@ const Contact = () => {
       console.error('Email Error:', error);
       toast({
         title: t("contact.error"),
-        description: t("contact.errorMessage"),
+        description: t("contact.errorMessage") + " Alternatively, email me at saadnajar@icloud.com",
         variant: "destructive",
       });
+      // Offer email fallback on error
+      setTimeout(() => {
+        if (confirm("Would you like to open your email client instead?")) {
+          window.location.href = `mailto:saadnajar@icloud.com?subject=Portfolio Contact from ${formData.name}&body=${encodeURIComponent(formData.message)}%0D%0A%0D%0AFrom: ${formData.email}`;
+        }
+      }, 1000);
     } finally {
       setIsSubmitting(false);
     }
