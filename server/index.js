@@ -15,6 +15,16 @@ app.use(cors({
 }));
 app.use(express.json());
 
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.status(200).json({ 
+    status: 'healthy', 
+    timestamp: new Date().toISOString(),
+    service: 'portfolio-smtp-server',
+    version: '1.0.0'
+  });
+});
+
 // Create transporter
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST || 'smtp.gmail.com',
@@ -35,10 +45,7 @@ transporter.verify((error, success) => {
   }
 });
 
-// Health check endpoint
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', message: 'Email server is running' });
-});
+
 
 // Send email endpoint
 app.post('/api/send-email', async (req, res) => {

@@ -1,0 +1,319 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    # Run daily at 2 AM UTC to catch any issues
+    - cron: '0 2 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+env:
+  NODE_VERSION: '18'
+
+jobs:
+  # Job 1: Lint and Type Check
+  lint-and-typecheck:
+    name: Lint & Type Check
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npm run lint
+        continue-on-error: true
+
+      - name: Run TypeScript type check
+        run: npx tsc --noEmit
+
+  # Job 2: Build and Test
+  build-and-test:
+    name: Build & Test Production
+    runs-on: ubuntu-latest
+    needs: lint-and-typecheck
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build production bundle
+        run: npm run build
+        env:
+          CI: true
+
+      - name: Check build output
+        run: |
+          if [ ! -d "dist" ]; then
+            echo "❌ Build failed: dist directory not found"
+            exit 1
+          fi
+          echo "✅ Build successful: dist directory created"
+          ls -la dist/
+
+      - name: Test preview server
+        run: |
+          npm run preview &
+          SERVER_PID=$!
+          echo "Server PID: $SERVER_PID"
+          
+          # Wait for server to start
+          sleep 5
+          
+          # Test if server is responding
+          if curl -f http://localhost:4173; then
+            echo "✅ Preview server is running successfully"
+            kill $SERVER_PID
+            exit 0
+          else
+            echo "❌ Preview server failed to start"
+            kill $SERVER_PID
+            exit 1
+          fi
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-build
+          path: dist/
+          retention-days: 7
+
+  # Job 3: Backend Server Test
+  test-backend:
+    name: Test Backend Server
+    runs-on: ubuntu-latest
+    needs: lint-and-typecheck
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Test backend server startup
+        run: |
+          node server/index.js &
+          SERVER_PID=$!
+          echo "Backend Server PID: $SERVER_PID"
+          
+          # Wait for server to start
+          sleep 3
+          
+          # Test health endpoint
+          if curl -f http://localhost:3001/health; then
+            echo "✅ Backend server is running successfully"
+            kill $SERVER_PID
+            exit 0
+          else
+            echo "❌ Backend server failed to start"
+            kill $SERVER_PID
+            exit 1
+          fi
+        env:
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          RECIPIENT_EMAIL: ${{ secrets.RECIPIENT_EMAIL }}
+          PORT: 3001
+
+  # Job 4: Security Audit
+  security-audit:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Run npm audit
+        run: npm audit --audit-level=moderate
+        continue-on-error: true
+
+  # Job 5: Notify on Failure
+  notify-on-failure:
+    name: Send Error Alert
+    runs-on: ubuntu-latest
+    needs: [lint-and-typecheck, build-and-test, test-backend, security-audit]
+    if: failure()
+    
+    steps:
+      - name: Send email notification
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.SMTP_HOST }}
+          server_port: ${{ secrets.SMTP_PORT }}
+          username: ${{ secrets.SMTP_USER }}
+          password: ${{ secrets.SMTP_PASS }}
+          subject: '🚨 CRITICAL: Portfolio Deployment Failed - ${{ github.repository }}'
+          to: ${{ secrets.RECIPIENT_EMAIL }}
+          from: ${{ secrets.SMTP_USER }}
+          html_body: |
+            <!DOCTYPE html>
+            <html>
+            <head>
+              <style>
+                body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+                .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+                .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 10px 10px 0 0; }
+                .content { background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px; }
+                .error { background: #fee; border-left: 4px solid #f44; padding: 15px; margin: 20px 0; border-radius: 4px; }
+                .details { background: #fff; padding: 15px; border-radius: 4px; margin: 15px 0; }
+                .footer { text-align: center; margin-top: 30px; color: #666; font-size: 12px; }
+                a { color: #667eea; text-decoration: none; }
+                .btn { display: inline-block; padding: 12px 24px; background: #667eea; color: white; border-radius: 5px; text-decoration: none; margin: 10px 5px; }
+              </style>
+            </head>
+            <body>
+              <div class="container">
+                <div class="header">
+                  <h1>🚨 Portfolio Deployment Failed</h1>
+                  <p>Critical error detected in your portfolio build process</p>
+                </div>
+                <div class="content">
+                  <div class="error">
+                    <strong>⚠️ Deployment Status:</strong> FAILED
+                  </div>
+                  
+                  <div class="details">
+                    <h3>Build Information:</h3>
+                    <ul>
+                      <li><strong>Repository:</strong> ${{ github.repository }}</li>
+                      <li><strong>Branch:</strong> ${{ github.ref_name }}</li>
+                      <li><strong>Commit:</strong> ${{ github.sha }}</li>
+                      <li><strong>Triggered by:</strong> ${{ github.actor }}</li>
+                      <li><strong>Workflow:</strong> ${{ github.workflow }}</li>
+                      <li><strong>Run ID:</strong> ${{ github.run_id }}</li>
+                    </ul>
+                  </div>
+
+                  <div class="details">
+                    <h3>What happened?</h3>
+                    <p>One or more critical jobs in the CI/CD pipeline failed:</p>
+                    <ul>
+                      <li>Lint & Type Check</li>
+                      <li>Build & Test Production</li>
+                      <li>Backend Server Test</li>
+                      <li>Security Audit</li>
+                    </ul>
+                  </div>
+
+                  <div style="text-align: center; margin: 30px 0;">
+                    <a href="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" class="btn">
+                      View Workflow Details
+                    </a>
+                    <a href="https://github.com/${{ github.repository }}/commit/${{ github.sha }}" class="btn">
+                      View Commit
+                    </a>
+                  </div>
+
+                  <div class="details">
+                    <h3>Next Steps:</h3>
+                    <ol>
+                      <li>Click "View Workflow Details" to see error logs</li>
+                      <li>Check the failed job for specific error messages</li>
+                      <li>Fix the issues in your code</li>
+                      <li>Push changes to trigger a new build</li>
+                    </ol>
+                  </div>
+                </div>
+                <div class="footer">
+                  <p>This is an automated message from GitHub Actions</p>
+                  <p>Portfolio: Saad Najar - Data Scientist & AI Engineer</p>
+                </div>
+              </div>
+            </body>
+            </html>
+
+  # Job 6: Success Notification
+  notify-on-success:
+    name: Send Success Notification
+    runs-on: ubuntu-latest
+    needs: [lint-and-typecheck, build-and-test, test-backend, security-audit]
+    if: success()
+    
+    steps:
+      - name: Send success email
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.SMTP_HOST }}
+          server_port: ${{ secrets.SMTP_PORT }}
+          username: ${{ secrets.SMTP_USER }}
+          password: ${{ secrets.SMTP_PASS }}
+          subject: '✅ Portfolio Deployment Successful - ${{ github.repository }}'
+          to: ${{ secrets.RECIPIENT_EMAIL }}
+          from: ${{ secrets.SMTP_USER }}
+          html_body: |
+            <!DOCTYPE html>
+            <html>
+            <head>
+              <style>
+                body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+                .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+                .header { background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 30px; border-radius: 10px 10px 0 0; }
+                .content { background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px; }
+                .success { background: #d1fae5; border-left: 4px solid #10b981; padding: 15px; margin: 20px 0; border-radius: 4px; }
+                .details { background: #fff; padding: 15px; border-radius: 4px; margin: 15px 0; }
+                .footer { text-align: center; margin-top: 30px; color: #666; font-size: 12px; }
+              </style>
+            </head>
+            <body>
+              <div class="container">
+                <div class="header">
+                  <h1>✅ Deployment Successful!</h1>
+                  <p>Your portfolio passed all tests and is ready for production</p>
+                </div>
+                <div class="content">
+                  <div class="success">
+                    <strong>🎉 All checks passed successfully!</strong>
+                  </div>
+                  
+                  <div class="details">
+                    <h3>Build Information:</h3>
+                    <ul>
+                      <li><strong>Branch:</strong> ${{ github.ref_name }}</li>
+                      <li><strong>Commit:</strong> ${{ github.sha }}</li>
+                      <li><strong>Author:</strong> ${{ github.actor }}</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="footer">
+                  <p>Portfolio: Saad Najar - Data Scientist & AI Engineer</p>
+                </div>
+              </div>
+            </body>
+            </html>
