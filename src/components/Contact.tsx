@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { API_ENDPOINTS, isApiConfigured } from "@/lib/api";
+import { API_ENDPOINTS } from "@/lib/api";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -25,22 +25,28 @@ const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
+    if (!sectionRef.current) return;
+
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        ".contact-item",
-        { opacity: 0, y: 50 },
-        {
-          opacity: 1,
-          y: 0,
-          stagger: 0.15,
-          duration: 0.8,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 70%",
-          },
-        }
-      );
+      const contactItems = sectionRef.current?.querySelectorAll(".contact-item");
+      
+      if (contactItems && contactItems.length > 0) {
+        gsap.fromTo(
+          contactItems,
+          { opacity: 0, y: 50 },
+          {
+            opacity: 1,
+            y: 0,
+            stagger: 0.15,
+            duration: 0.8,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top 70%",
+            },
+          }
+        );
+      }
     }, sectionRef);
 
     return () => ctx.revert();
@@ -59,22 +65,21 @@ const Contact = () => {
       return;
     }
 
-    // Check if API is configured
-    if (!isApiConfigured() || !API_ENDPOINTS.SEND_EMAIL) {
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
       toast({
-        title: "Service Unavailable",
-        description: "Contact form is temporarily unavailable. Please email me directly at saadnajar@icloud.com",
+        title: t("contact.error"),
+        description: "Please provide a valid email address",
         variant: "destructive",
       });
-      // Open email client as fallback
-      window.location.href = `mailto:saadnajar@icloud.com?subject=Portfolio Contact from ${formData.name}&body=${encodeURIComponent(formData.message)}%0D%0A%0D%0AFrom: ${formData.email}`;
       return;
     }
 
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(API_ENDPOINTS.SEND_EMAIL, {
+      const response = await fetch(API_ENDPOINTS.SEND_EMAIL || 'http://localhost:3001/api/send-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -87,7 +92,8 @@ const Contact = () => {
       });
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorData = await response.json().catch(() => ({ message: 'Failed to send message' }));
+        throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
       }
 
       const data = await response.json();
@@ -97,23 +103,18 @@ const Contact = () => {
           title: t("contact.successTitle"),
           description: t("contact.successMessage"),
         });
+        // Reset form on success
         setFormData({ name: "", email: "", message: "" });
       } else {
-        throw new Error(data.message);
+        throw new Error(data.message || 'Failed to send message');
       }
     } catch (error) {
-      console.error('Email Error:', error);
+      console.error('Email sending error:', error);
       toast({
         title: t("contact.error"),
-        description: t("contact.errorMessage") + " Alternatively, email me at saadnajar@icloud.com",
+        description: error instanceof Error ? error.message : t("contact.errorMessage"),
         variant: "destructive",
       });
-      // Offer email fallback on error
-      setTimeout(() => {
-        if (confirm("Would you like to open your email client instead?")) {
-          window.location.href = `mailto:saadnajar@icloud.com?subject=Portfolio Contact from ${formData.name}&body=${encodeURIComponent(formData.message)}%0D%0A%0D%0AFrom: ${formData.email}`;
-        }
-      }, 1000);
     } finally {
       setIsSubmitting(false);
     }

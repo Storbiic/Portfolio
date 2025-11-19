@@ -25,7 +25,7 @@ Data Scientist & AI Engineer Portfolio - Showcasing intelligent solutions throug
 
 **Backend:**
 - Express.js
-- Nodemailer (SMTP)
+- Nodemailer (SMTP via Mailgun)
 - Node.js 18+
 
 **DevOps:**

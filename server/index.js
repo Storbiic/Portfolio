@@ -34,13 +34,19 @@ app.get('/health', (req, res) => {
 
 // Create transporter
 const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST || 'smtp.gmail.com',
+  host: process.env.SMTP_HOST || 'smtp.mailgun.org',
   port: parseInt(process.env.SMTP_PORT || '587'),
   secure: false, // true for 465, false for other ports
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS,
   },
+  // Mailgun-friendly settings
+  tls: {
+    rejectUnauthorized: false
+  },
+  debug: true, // Enable debug output
+  logger: true // Log information to console
 });
 
 // Verify transporter configuration
