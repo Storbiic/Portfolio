@@ -18,7 +18,7 @@ To enable the CI/CD pipeline with email notifications, you need to configure the
 | `SMTP_HOST` | `smtp.gmail.com` | Gmail SMTP server |
 | `SMTP_PORT` | `587` | SMTP port (587 for TLS) |
 | `SMTP_USER` | `saadnajar.portfolio@gmail.com` | Your Gmail address |
-| `SMTP_PASS` | `gwkhdyqbcyspjobr` | Your Gmail App Password |
+| `SMTP_PASS` | `your-gmail-app-password` | Your Gmail App Password |
 | `RECIPIENT_EMAIL` | `saadnajar.portfolio@gmail.com` | Email to receive alerts |
 
 ## Step-by-Step Instructions
@@ -40,7 +40,7 @@ To enable the CI/CD pipeline with email notifications, you need to configure the
 
 ### 4. Add SMTP_PASS
 - Name: `SMTP_PASS`
-- Secret: `gwkhdyqbcyspjobr`
+- Secret: `your-gmail-app-password`
 - Click "Add secret"
 
 ### 5. Add RECIPIENT_EMAIL

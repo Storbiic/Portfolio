@@ -16,7 +16,7 @@ Your production website is trying to connect to `http://localhost:3001` which do
    SMTP_HOST=smtp.gmail.com
    SMTP_PORT=587
    SMTP_USER=saadnajar.portfolio@gmail.com
-   SMTP_PASS=gwkhdyqbcyspjobr
+   SMTP_PASS=your-gmail-app-password
    RECIPIENT_EMAIL=saadnajar.portfolio@gmail.com
    PORT=3001
    ```
@@ -50,7 +50,7 @@ Your production website is trying to connect to `http://localhost:3001` which do
    heroku config:set SMTP_HOST=smtp.gmail.com
    heroku config:set SMTP_PORT=587
    heroku config:set SMTP_USER=saadnajar.portfolio@gmail.com
-   heroku config:set SMTP_PASS=gwkhdyqbcyspjobr
+   heroku config:set SMTP_PASS=your-gmail-app-password
    heroku config:set RECIPIENT_EMAIL=saadnajar.portfolio@gmail.com
    ```
 4. **Create Procfile:**
