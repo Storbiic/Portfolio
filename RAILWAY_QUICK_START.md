@@ -30,8 +30,8 @@ Railway might try to build from the root, but we need it to run the backend:
 ```
 SMTP_HOST=smtp.mailersend.net
 SMTP_PORT=587
-SMTP_USER=MS_n1uyT6@test-eqvygm01rzjl0p7w.mlsender.net
-SMTP_PASS=mssp.gBrHada.ynrw7gy3q8nl2k8e.iAzXrhc
+SMTP_USER=your-mailersend-smtp-username
+SMTP_PASS=your-mailersend-smtp-password
 RECIPIENT_EMAIL=saadnajar@icloud.com
 PORT=3001
 NODE_ENV=production

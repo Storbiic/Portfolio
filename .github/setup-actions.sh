@@ -9,7 +9,7 @@ echo "────────────────────────�
 echo "SMTP_HOST          = smtp.gmail.com"
 echo "SMTP_PORT          = 587"
 echo "SMTP_USER          = saadnajar.portfolio@gmail.com"
-echo "SMTP_PASS          = gwkhdyqbcyspjobr"
+echo "SMTP_PASS          = your-gmail-app-password"
 echo "RECIPIENT_EMAIL    = saadnajar.portfolio@gmail.com"
 echo ""
 
