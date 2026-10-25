@@ -1,112 +1,56 @@
-import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Presentation, Github, Briefcase } from "lucide-react";
+import { motion } from "motion/react";
+import { Briefcase, GitBranch, PresentationChart } from "@phosphor-icons/react";
+import SectionHeader from "@/components/SectionHeader";
+import { inView, reveal, tint, type SystemColor } from "@/lib/motion";
 
-gsap.registerPlugin(ScrollTrigger);
-
-const organizations = [
+const organizations: { name: string; role: string; description: string; icon: typeof Briefcase; tint: SystemColor }[] = [
   {
     name: "Big Data & AI Workshop",
     role: "Organizing Committee",
     description: "Organized the International Workshop on Big Data and AI Applications (2023), coordinating technical sessions and facilitating knowledge exchange among researchers and practitioners.",
-    icon: Presentation,
+    icon: PresentationChart,
+    tint: "orange",
   },
   {
     name: "Open Source Contributor",
     role: "AI/ML Developer",
     description: "Contributing to open-source AI projects and sharing implementations of RAG systems, LLM applications, and data engineering solutions on GitHub.",
-    icon: Github,
+    icon: GitBranch,
+    tint: "indigo",
   },
   {
     name: "Freelance AI Consultant",
     role: "Technical Advisor",
     description: "Delivering AI-powered solutions for manufacturing and quality management, helping organizations implement intelligent automation and data-driven decision systems.",
     icon: Briefcase,
+    tint: "green",
   },
 ];
 
 const OrganizationWorks = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        titleRef.current,
-        { opacity: 0, y: 50 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1.5,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: titleRef.current,
-            start: "top 80%",
-          },
-        }
-      );
-
-      cardsRef.current.forEach((card, index) => {
-        if (card) {
-          gsap.fromTo(
-            card,
-            { opacity: 0, y: 80, rotateX: -15 },
-            {
-              opacity: 1,
-              y: 0,
-              rotateX: 0,
-              duration: 1.2,
-              delay: index * 0.15,
-              ease: "power2.out",
-              scrollTrigger: {
-                trigger: card,
-                start: "top 85%",
-              },
-            }
-          );
-        }
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
-    <section
-      id="organization"
-      ref={sectionRef}
-      className="relative py-32 overflow-hidden"
-    >
-      <div className="grid-bg absolute inset-0 opacity-10" />
-      
-      <div className="container relative z-10 mx-auto px-6">
-        <h2
-          ref={titleRef}
-          className="text-4xl lg:text-6xl font-bold text-center mb-16 glow-text"
-        >
-          Beyond the Code
-        </h2>
+    <section id="organization" className="py-24 md:py-32">
+      <div className="container">
+        <SectionHeader id="organization" eyebrow="Community" title="Beyond the Code" />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {organizations.map((org, index) => (
-            <div
-              key={index}
-              ref={(el) => (cardsRef.current[index] = el)}
-              className="glass p-8 rounded-2xl border border-primary/20 hover:border-primary/40 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 text-center group"
+            <motion.div
+              key={org.name}
+              variants={reveal}
+              {...inView}
+              custom={index}
+              style={tint(org.tint)}
+              className="relative isolate overflow-hidden rounded-tile bg-surface p-8"
             >
-              <div className="mb-6 inline-block p-5 rounded-2xl bg-primary/10 border border-primary/20 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
-                <org.icon className="w-10 h-10 text-primary" />
-              </div>
-              <h3 className="text-2xl font-bold text-foreground mb-2">
-                {org.name}
-              </h3>
-              <p className="text-primary font-medium mb-4">{org.role}</p>
-              <p className="text-foreground/70 leading-relaxed">
-                {org.description}
-              </p>
-            </div>
+              <div className="tile-glow" aria-hidden="true" />
+              <span className="icon-badge">
+                <org.icon size={24} weight="fill" aria-hidden="true" />
+              </span>
+              <h3 className="mt-6 text-title">{org.name}</h3>
+              <p className="mt-1 text-[15px] text-muted-foreground">{org.role}</p>
+              <p className="mt-4 text-muted-foreground">{org.description}</p>
+            </motion.div>
           ))}
         </div>
       </div>

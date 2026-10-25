@@ -1,129 +1,54 @@
-import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import profileImg from "@/assets/profile.png";
-import { Brain, Database, Sparkles, TrendingUp } from "lucide-react";
+import { motion } from "motion/react";
+import SectionHeader from "@/components/SectionHeader";
+import CountUp from "@/components/motion/CountUp";
+import ScrollHighlightText from "@/components/motion/ScrollHighlightText";
+import { inView, reveal } from "@/lib/motion";
 
-gsap.registerPlugin(ScrollTrigger);
+// Outcomes from the roles listed under Experience. Each figure gets its own pair of system
+// colors, stepping along the same blue → pink run as the hero.
+const highlights = [
+  { value: 70, label: "fewer repetitive supplier inquiries with a RAG quality assistant", gradient: "from-system-blue to-system-indigo" },
+  { value: 83, label: "faster BOM processing, from 2 hours to under 20 minutes", gradient: "from-system-indigo to-system-purple" },
+  { value: 60, label: "higher accuracy in AI document extraction", gradient: "from-system-purple to-system-pink" },
+  { value: 85, label: "accuracy detecting customs fraud with machine learning", gradient: "from-system-pink to-system-red" },
+];
 
 const About = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const imageRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
-
-  const skills = [
-    { icon: Brain, name: "Machine Learning", color: "from-cyan-400 to-blue-500" },
-    { icon: Database, name: "Data Science", color: "from-blue-400 to-indigo-500" },
-    { icon: Sparkles, name: "Deep Learning", color: "from-indigo-400 to-purple-500" },
-    { icon: TrendingUp, name: "AI Engineering", color: "from-purple-400 to-pink-500" },
-  ];
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        imageRef.current,
-        { opacity: 0, x: 100, filter: "blur(10px)" },
-        {
-          opacity: 1,
-          x: 0,
-          filter: "blur(0px)",
-          duration: 1.8,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 75%",
-          },
-        }
-      );
-
-      gsap.fromTo(
-        contentRef.current,
-        { opacity: 0, x: -50 },
-        {
-          opacity: 1,
-          x: 0,
-          duration: 1.5,
-          ease: "power1.out",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 75%",
-          },
-        }
-      );
-
-      gsap.fromTo(
-        ".skill-card",
-        { opacity: 0, y: 30, scale: 0.9 },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          stagger: 0.15,
-          duration: 1,
-          ease: "elastic.out(1, 0.6)",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 65%",
-          },
-        }
-      );
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
-    <section
-      ref={sectionRef}
-      id="about"
-      className="relative py-32"
-      data-scroll-section
-    >
-      <div className="grid-bg absolute inset-0 opacity-10" />
-      
-      <div className="container relative z-10 mx-auto px-6">
-        <div className="max-w-4xl mx-auto">
-          {/* Bio & Skills */}
-          <div ref={contentRef} className="space-y-8">
-            <div className="glass-card rounded-2xl p-8 border border-primary/20 space-y-6">
-              <div className="space-y-4">
-                <h2 className="text-4xl font-bold lg:text-5xl glow-text">
-                  About Me
-                </h2>
-                <div className="h-1 w-20 rounded-full bg-gradient-to-r from-glow to-glow-subtle" />
-              </div>
+    <section id="about" className="py-24 md:py-32">
+      <div className="container">
+        <div className="max-w-4xl">
+          <SectionHeader id="about" eyebrow="Profile" title="About Me" className="" />
+          <ScrollHighlightText
+            className="mt-6 text-[clamp(1.5rem,3vw,2.125rem)] font-semibold leading-[1.2] tracking-[-0.02em]"
+            text="I'm a passionate Data Scientist and AI Engineer building intelligent systems that solve real-world problems. With expertise in machine learning, deep learning, and advanced analytics, I transform complex data into actionable insights."
+          />
+          <motion.p variants={reveal} {...inView} className="mt-6 max-w-2xl text-muted-foreground">
+            My work focuses on creating scalable AI solutions, developing predictive
+            models, and leveraging cutting-edge technologies to drive innovation and
+            business growth.
+          </motion.p>
+        </div>
 
-              <p className="text-lg leading-relaxed text-foreground/80">
-                I'm a passionate Data Scientist and AI Engineer specializing in building
-                intelligent systems that solve real-world problems. With expertise in
-                machine learning, deep learning, and advanced analytics, I transform
-                complex data into actionable insights.
+        <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {highlights.map((item, index) => (
+            <motion.div
+              key={item.label}
+              variants={reveal}
+              {...inView}
+              custom={index}
+              className="rounded-tile bg-surface p-7"
+            >
+              <p className="text-[clamp(2.75rem,5vw,3.5rem)] font-semibold leading-none tracking-[-0.03em] tabular-nums">
+                <CountUp
+                  value={item.value}
+                  suffix="%"
+                  className={`bg-gradient-to-br bg-clip-text text-transparent contrast-more:bg-none contrast-more:text-foreground ${item.gradient}`}
+                />
               </p>
-
-              <p className="text-lg leading-relaxed text-foreground/80">
-                My work focuses on creating scalable AI solutions, developing predictive
-                models, and leveraging cutting-edge technologies to drive innovation and
-                business growth.
-              </p>
-            </div>
-
-            {/* Skills grid */}
-            <div className="grid grid-cols-2 gap-4 pt-4">
-              {skills.map((skill, index) => (
-                <div
-                  key={index}
-                  className="skill-card glass-card rounded-xl p-6 border border-primary/20 hover:border-primary/50 transition-all duration-300 group cursor-pointer"
-                >
-                  <div className={`inline-flex p-3 rounded-lg bg-gradient-to-br ${skill.color} mb-3`}>
-                    <skill.icon className="h-6 w-6 text-white" />
-                  </div>
-                  <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors">
-                    {skill.name}
-                  </h3>
-                </div>
-              ))}
-            </div>
-          </div>
+              <p className="mt-3 text-[15px] leading-snug text-muted-foreground">{item.label}</p>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

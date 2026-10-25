@@ -1,9 +1,10 @@
-import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Briefcase, Calendar } from "lucide-react";
+import { useRef } from "react";
+import { motion, useScroll } from "motion/react";
+import SectionHeader from "@/components/SectionHeader";
+import { inView, reveal, spring } from "@/lib/motion";
 
-gsap.registerPlugin(ScrollTrigger);
+// Dots step along the rail's gradient, top to bottom
+const dotColors = ["bg-system-blue", "bg-system-indigo", "bg-system-purple", "bg-system-pink"];
 
 const experiences = [
   {
@@ -45,121 +46,71 @@ const experiences = [
 ];
 
 const Experience = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const timelineRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        titleRef.current,
-        { opacity: 0, y: 50 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1.5,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: titleRef.current,
-            start: "top 80%",
-          },
-        }
-      );
-
-      cardsRef.current.forEach((card, index) => {
-        if (card) {
-          gsap.fromTo(
-            card,
-            { opacity: 0, x: -50 },
-            {
-              opacity: 1,
-              x: 0,
-              duration: 1.2,
-              delay: index * 0.15,
-              ease: "power2.out",
-              scrollTrigger: {
-                trigger: card,
-                start: "top 85%",
-              },
-            }
-          );
-        }
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
+  // The rail fills as the timeline passes the lower third of the viewport, where the dots light up
+  const { scrollYProgress } = useScroll({ target: timelineRef, offset: ["start 0.7", "end 0.7"] });
 
   return (
-    <section
-      id="experience"
-      ref={sectionRef}
-      className="relative py-32 overflow-hidden"
-    >
-      <div className="grid-bg absolute inset-0 opacity-10" />
-      
-      <div className="container relative z-10 mx-auto px-6">
-        <h2
-          ref={titleRef}
-          className="text-4xl lg:text-6xl font-bold text-center mb-16 glow-text"
-        >
-          Experience
-        </h2>
+    <section id="experience" className="bg-surface py-24 md:py-32">
+      <div className="container">
+        <SectionHeader id="experience" eyebrow="Career" title="Work Experience" />
 
-        <div className="max-w-4xl mx-auto space-y-8">
-          {experiences.map((exp, index) => (
-            <div
-              key={index}
-              ref={(el) => (cardsRef.current[index] = el)}
-              className="glass p-8 rounded-2xl border border-primary/20 hover:border-primary/40 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10"
-            >
-              <div className="flex items-start gap-4">
-                <div className="p-3 rounded-xl bg-primary/10 border border-primary/20">
-                  <Briefcase className="w-6 h-6 text-primary" />
+        {/* A timeline of roles: when and where on the left, what was built on the right */}
+        <div ref={timelineRef} className="relative">
+          <div aria-hidden="true" className="absolute bottom-0 left-[5px] top-0 w-px bg-border">
+            <motion.div
+              className="h-full w-full origin-top bg-gradient-to-b from-system-blue via-system-purple to-system-pink"
+              style={{ scaleY: scrollYProgress }}
+            />
+          </div>
+
+          <ol>
+            {experiences.map((exp, index) => (
+              <motion.li
+                key={index}
+                variants={reveal}
+                {...inView}
+                className="relative ml-8 grid gap-4 border-t py-10 md:ml-12 md:grid-cols-[minmax(0,15rem)_minmax(0,1fr)] md:gap-12"
+              >
+                {/* Lit while the role is above the lower third, matching the rail's fill */}
+                <span
+                  aria-hidden="true"
+                  className="absolute -left-8 top-[45px] h-[11px] w-[11px] rounded-full border-2 border-border bg-surface md:-left-12"
+                >
+                  <motion.span
+                    className={`absolute -inset-0.5 rounded-full ${dotColors[index % dotColors.length]}`}
+                    initial={{ scale: 0 }}
+                    whileInView={{ scale: 1 }}
+                    viewport={{ margin: "0px 0px -30% 0px" }}
+                    transition={spring.snappy}
+                  />
+                </span>
+
+                <div className="space-y-1">
+                  <p className="text-[15px] font-semibold">{exp.company}</p>
+                  {exp.location && <p className="text-[15px] text-muted-foreground">{exp.location}</p>}
+                  <p className="pt-1 font-mono text-[12px] uppercase tracking-[0.04em] text-muted-foreground">{exp.period}</p>
                 </div>
-                <div className="flex-1 space-y-4">
-                  <div>
-                    <h3 className="text-2xl font-bold text-foreground mb-2">
-                      {exp.title}
-                    </h3>
-                    <p className="text-primary font-semibold text-lg">{exp.company}</p>
-                    {exp.location && (
-                      <p className="text-muted-foreground text-base font-medium">{exp.location}</p>
-                    )}
-                    <div className="flex items-center gap-2 text-muted-foreground mt-2">
-                      <Calendar className="w-4 h-4" />
-                      <span>{exp.period}</span>
-                    </div>
-                  </div>
 
-                  {exp.project && (
-                    <div className="pt-2">
-                      <h4 className="text-xl font-bold text-foreground/90 mb-2">
-                        {exp.project}
-                      </h4>
-                    </div>
-                  )}
-
-                  <p className="text-foreground/80 leading-relaxed">
-                    {exp.description}
-                  </p>
+                <div className="min-w-0 space-y-3">
+                  <h3 className="text-title">{exp.title}</h3>
+                  {exp.project && <p className="font-medium text-link">{exp.project}</p>}
+                  <p className="max-w-[65ch] text-muted-foreground">{exp.description}</p>
 
                   {exp.techStack && exp.techStack.length > 0 && (
-                    <div className="flex flex-wrap gap-2 pt-3">
-                      {exp.techStack.map((tech, techIndex) => (
-                        <span
-                          key={techIndex}
-                          className="rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary border border-primary/20"
-                        >
+                    <ul className="flex flex-wrap gap-2 pt-2" aria-label="Tech stack">
+                      {exp.techStack.map((tech) => (
+                        <li key={tech} className="rounded-full bg-card px-3 py-1 text-[13px] text-foreground/80">
                           {tech}
-                        </span>
+                        </li>
                       ))}
-                    </div>
+                    </ul>
                   )}
                 </div>
-              </div>
-            </div>
-          ))}
+              </motion.li>
+            ))}
+          </ol>
         </div>
       </div>
     </section>

@@ -1,7 +1,4 @@
-import { useState } from "react";
-import LoadingScreen from "@/components/LoadingScreen";
 import Navbar from "@/components/Navbar";
-
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Experience from "@/components/Experience";
@@ -11,47 +8,25 @@ import OrganizationWorks from "@/components/OrganizationWorks";
 import SkillSet from "@/components/SkillSet";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import AdaptivePointer from "@/components/AdaptivePointer";
 
 const Index = () => {
-  const [loading, setLoading] = useState(true);
-
-  const handleLoadingComplete = () => {
-    setLoading(false);
-  };
-
   return (
     <>
-      {loading && <LoadingScreen onLoadingComplete={handleLoadingComplete} />}
-      
-      {!loading && (
-        <>
-          {/* Fixed Spline 3D Background */}
-          <div className="fixed inset-0 z-0">
-            <iframe
-              src="https://my.spline.design/liquidglass-rM3o93P8ISaWcg143hDOgO2T-RtD/"
-              className="h-full w-full"
-              title="Liquid Glass 3D Background"
-              style={{ border: 0 }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/20 to-background/60 pointer-events-none" />
-            {/* Hide Spline watermark */}
-            <div className="absolute bottom-0 right-0 w-48 h-16 bg-background/90 pointer-events-none z-10" />
-          </div>
-          
-          <Navbar />
-          <main className="relative z-10">
-            <Hero />
-            <About />
-            <Experience />
-            <Features />
-            <Projects />
-            <OrganizationWorks />
-            <SkillSet />
-            <Contact />
-            <Footer />
-          </main>
-        </>
-      )}
+      <Navbar />
+      {/* Sections alternate between the page background and the surface band */}
+      <main>
+        <Hero />
+        <About />
+        <Experience />
+        <Features />
+        <Projects />
+        <OrganizationWorks />
+        <SkillSet />
+        <Contact />
+      </main>
+      <Footer />
+      <AdaptivePointer />
     </>
   );
 };

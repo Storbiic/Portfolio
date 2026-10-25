@@ -1,129 +1,147 @@
-import { useState, useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-
-const navItems = [
-  { label: "About Me", href: "#about" },
-  { label: "Experience", href: "#experience" },
-  { label: "Features", href: "#features" },
-  { label: "Projects", href: "#projects" },
-  { label: "Beyond the code", href: "#organization" },
-  { label: "Skill Set", href: "#skills" },
-  { label: "Get In Touch", href: "#contact" },
-];
+import { useState, useEffect } from "react";
+import * as Dialog from "@radix-ui/react-dialog";
+import { motion, useScroll } from "motion/react";
+import { List, X } from "@phosphor-icons/react";
+import { ThemeToggle } from "@/components/ThemeControls";
+import { scrollToSection, spring } from "@/lib/motion";
+import { navItems } from "@/lib/navigation";
 
 const Navbar = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const navRef = useRef<HTMLElement>(null);
-  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const [activeHref, setActiveHref] = useState<string | null>(null);
+  const { scrollYProgress } = useScroll();
 
+  // Highlight the section crossing the middle of the viewport, so the nav answers "where am I?"
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const href = `#${entry.target.id}`;
+          if (entry.isIntersecting) setActiveHref(href);
+          else setActiveHref((current) => (current === href ? null : current));
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px" }
+    );
+
+    navItems.forEach((item) => {
+      const section = document.querySelector(item.href);
+      if (section) observer.observe(section);
+    });
+
+    return () => observer.disconnect();
   }, []);
 
-  useEffect(() => {
-    if (isMobileMenuOpen && mobileMenuRef.current) {
-      gsap.fromTo(
-        mobileMenuRef.current,
-        { x: "100%", opacity: 0 },
-        { x: "0%", opacity: 1, duration: 0.4, ease: "power3.out" }
-      );
-    }
-  }, [isMobileMenuOpen]);
-
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-      setIsMobileMenuOpen(false);
-    }
+  const handleNavClick = (href: string) => {
+    setIsMobileMenuOpen(false);
+    scrollToSection(href);
   };
 
+  const logo = (
+    <a
+      href="#"
+      className="text-[17px] font-semibold tracking-[-0.02em]"
+      onClick={(e) => {
+        e.preventDefault();
+        handleNavClick("#");
+      }}
+    >
+      Saad Najar
+    </a>
+  );
+
   return (
-    <>
-      <nav
-        ref={navRef}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled
-            ? "glass-card backdrop-blur-xl border-b border-border/50"
-            : "bg-transparent"
-        }`}
-      >
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            {/* Logo */}
+    <nav className="material fixed inset-x-0 top-0 z-50 pt-[env(safe-area-inset-top)]">
+      <div className="container flex h-12 items-center justify-between">
+        {logo}
+
+        {/* Desktop Nav */}
+        <div className="hidden items-center gap-1 lg:flex">
+          {navItems.map((item) => (
             <a
-              href="#"
-              className="text-2xl font-bold glow-text cursor-pointer"
+              key={item.href}
+              href={item.href}
+              aria-current={activeHref === item.href ? "true" : undefined}
               onClick={(e) => {
                 e.preventDefault();
-                window.scrollTo({ top: 0, behavior: "smooth" });
+                handleNavClick(item.href);
               }}
+              className={`relative rounded-full px-3 py-1.5 text-xs tracking-normal transition-colors hover:text-foreground ${
+                activeHref === item.href ? "text-foreground" : "text-foreground/70"
+              }`}
             >
-              Portfolio
+              {/* One pill slides between links, so the eye follows where you are */}
+              {activeHref === item.href && (
+                <motion.span
+                  layoutId="nav-active"
+                  className="absolute inset-0 rounded-full bg-foreground/[0.07]"
+                  transition={spring.snappy}
+                />
+              )}
+              <span className="relative">{item.label}</span>
             </a>
+          ))}
+          <ThemeToggle className="ml-2" />
+        </div>
 
-            {/* Desktop Nav */}
-            <div className="hidden lg:flex items-center gap-8">
-              {navItems.map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection(item.href);
-                  }}
-                  className="text-sm font-medium text-foreground/80 hover:text-primary transition-colors magnetic-btn"
-                >
-                  {item.label}
-                </a>
-              ))}
-            </div>
-
-            {/* Mobile Menu Button */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="lg:hidden"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        {/* Mobile Menu: Radix handles focus trapping, Escape and scroll lock.
+            It covers the bar in place and the close button sits where the menu button was. */}
+        <div className="-mr-2 flex items-center gap-1 lg:hidden">
+        <ThemeToggle />
+        <Dialog.Root open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+          <Dialog.Trigger
+            className="flex h-10 w-10 items-center justify-center rounded-full transition-colors active:bg-secondary lg:hidden"
+            aria-label="Open menu"
+          >
+            <List className="h-5 w-5" />
+          </Dialog.Trigger>
+          <Dialog.Portal>
+            <Dialog.Content
+              aria-describedby={undefined}
+              className="fixed inset-0 z-[60] overflow-y-auto bg-background pt-[env(safe-area-inset-top)] duration-300 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:slide-in-from-top-2 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:slide-out-to-top-2"
             >
-              {isMobileMenuOpen ? <X /> : <Menu />}
-            </Button>
-          </div>
+              <div className="container flex h-12 items-center justify-between">
+                {logo}
+                <Dialog.Close
+                  className="-mr-2 flex h-10 w-10 items-center justify-center rounded-full transition-colors active:bg-secondary"
+                  aria-label="Close menu"
+                >
+                  <X className="h-5 w-5" />
+                </Dialog.Close>
+              </div>
+              <Dialog.Title className="sr-only">Menu</Dialog.Title>
+              <div className="container flex flex-col pb-10 pt-6">
+                {navItems.map((item, index) => (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    aria-current={activeHref === item.href ? "true" : undefined}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNavClick(item.href);
+                    }}
+                    style={{ animationDelay: `${60 + index * 25}ms` }}
+                    className={`py-2 text-[28px] font-semibold tracking-[-0.02em] duration-300 fill-mode-both animate-in fade-in-0 slide-in-from-top-1 transition-colors active:text-foreground/60 ${
+                      activeHref === item.href ? "text-foreground" : "text-foreground/80"
+                    }`}
+                  >
+                    {item.label}
+                  </a>
+                ))}
+              </div>
+            </Dialog.Content>
+          </Dialog.Portal>
+        </Dialog.Root>
         </div>
-      </nav>
+      </div>
 
-      {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <div
-          ref={mobileMenuRef}
-          className="fixed inset-0 z-40 lg:hidden glass-card backdrop-blur-xl"
-          style={{ paddingTop: "80px" }}
-        >
-          <div className="flex flex-col items-center gap-6 p-8">
-            {navItems.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  scrollToSection(item.href);
-                }}
-                className="text-xl font-medium text-foreground hover:text-primary transition-colors"
-              >
-                {item.label}
-              </a>
-            ))}
-          </div>
-        </div>
-      )}
-    </>
+      {/* Reading progress, tracking the scroll position 1:1 */}
+      <motion.div
+        aria-hidden="true"
+        className="absolute inset-x-0 bottom-0 h-0.5 origin-left bg-gradient-to-r from-system-blue via-system-purple to-system-pink"
+        style={{ scaleX: scrollYProgress }}
+      />
+    </nav>
   );
 };
 

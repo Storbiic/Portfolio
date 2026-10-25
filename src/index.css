@@ -2,56 +2,132 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here.
 All colors MUST be HSL.
+Apple-style palette: neutral surfaces, one blue for actions, and a dark scheme that follows the system setting.
 */
 
 @layer base {
   :root {
-    --background: 220 30% 5%;
-    --foreground: 190 100% 95%;
+    color-scheme: light;
 
-    --card: 220 25% 8%;
-    --card-foreground: 190 100% 95%;
+    --background: 0 0% 100%;
+    --foreground: 240 3% 12%;
 
-    --popover: 220 25% 8%;
-    --popover-foreground: 190 100% 95%;
+    /* Alternate section band (apple.com's #f5f5f7) */
+    --surface: 240 11% 96%;
 
-    --primary: 190 100% 60%;
-    --primary-foreground: 220 30% 5%;
+    /* Tiles sitting on a surface band */
+    --card: 0 0% 100%;
+    --card-foreground: 240 3% 12%;
 
-    --secondary: 220 20% 15%;
-    --secondary-foreground: 190 100% 95%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 3% 12%;
 
-    --muted: 220 20% 12%;
-    --muted-foreground: 190 30% 70%;
+    --primary: 210 100% 45%;
+    --primary-foreground: 0 0% 100%;
 
-    --accent: 190 100% 60%;
-    --accent-foreground: 220 30% 5%;
+    /* Text links and accent text: tuned per scheme for contrast */
+    --link: 210 100% 40%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --secondary: 240 11% 92%;
+    --secondary-foreground: 240 3% 12%;
 
-    --border: 220 20% 20%;
-    --input: 220 20% 15%;
-    --ring: 190 100% 60%;
+    --muted: 240 11% 96%;
+    --muted-foreground: 240 2% 44%;
+
+    --accent: 240 11% 92%;
+    --accent-foreground: 240 3% 12%;
+
+    --destructive: 0 84% 46%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 240 6% 84%;
+    --input: 240 6% 84%;
+    --ring: 210 100% 45%;
 
     --radius: 0.75rem;
 
-    /* Custom portfolio colors */
-    --glow: 190 100% 60%;
-    --glow-subtle: 190 80% 50%;
-    --glass-bg: 220 25% 10%;
-    --grid-color: 190 50% 30%;
+    --sidebar-background: 240 11% 96%;
+    --sidebar-foreground: 240 3% 12%;
+    --sidebar-primary: 210 100% 45%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 11% 92%;
+    --sidebar-accent-foreground: 240 3% 12%;
+    --sidebar-border: 240 6% 84%;
+    --sidebar-ring: 210 100% 45%;
 
-    --sidebar-background: 220 25% 8%;
-    --sidebar-foreground: 190 100% 95%;
-    --sidebar-primary: 190 100% 60%;
-    --sidebar-primary-foreground: 220 30% 5%;
-    --sidebar-accent: 220 20% 15%;
-    --sidebar-accent-foreground: 190 100% 95%;
-    --sidebar-border: 220 20% 20%;
-    --sidebar-ring: 190 100% 60%;
+    /* Apple system colors: accents for icons, highlights and glows, never for body text */
+    --system-blue: 211 100% 50%;
+    --system-indigo: 241 61% 59%;
+    --system-purple: 280 68% 60%;
+    --system-pink: 348 100% 59%;
+    --system-orange: 35 100% 50%;
+    --system-green: 135 59% 49%;
+    --system-teal: 189 61% 49%;
+    --system-red: 3 100% 59%;
+
+    /* How strongly tints glow behind content */
+    --glow-hero: 0.32;
+    --glow-tile: 0.09;
+  }
+
+  /* Dark scheme: the class follows the system unless the visitor picked one */
+  .dark {
+    color-scheme: dark;
+
+    --background: 0 0% 0%;
+    --foreground: 240 11% 96%;
+
+    --surface: 240 3% 7%;
+
+    --card: 240 3% 12%;
+    --card-foreground: 240 11% 96%;
+
+    --popover: 240 3% 12%;
+    --popover-foreground: 240 11% 96%;
+
+    --primary: 210 100% 45%;
+    --primary-foreground: 0 0% 100%;
+
+    --link: 211 100% 58%;
+
+    --secondary: 240 2% 18%;
+    --secondary-foreground: 240 11% 96%;
+
+    --muted: 240 3% 7%;
+    --muted-foreground: 240 2% 58%;
+
+    --accent: 240 2% 18%;
+    --accent-foreground: 240 11% 96%;
+
+    --destructive: 0 90% 64%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 240 2% 24%;
+    --input: 240 2% 24%;
+    --ring: 211 100% 58%;
+
+    --sidebar-background: 240 3% 7%;
+    --sidebar-foreground: 240 11% 96%;
+    --sidebar-primary: 210 100% 45%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 2% 18%;
+    --sidebar-accent-foreground: 240 11% 96%;
+    --sidebar-border: 240 2% 24%;
+    --sidebar-ring: 211 100% 58%;
+
+    --system-blue: 210 100% 52%;
+    --system-indigo: 241 73% 63%;
+    --system-purple: 280 85% 65%;
+    --system-pink: 348 100% 61%;
+    --system-orange: 36 100% 52%;
+    --system-green: 135 64% 50%;
+    --system-teal: 188 71% 56%;
+    --system-red: 3 100% 61%;
+
+    --glow-hero: 0.42;
+    --glow-tile: 0.16;
   }
 }
 
@@ -60,99 +136,143 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
   body {
-    @apply bg-background text-foreground overflow-x-hidden;
-    font-family: 'Didact Gothic', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    @apply bg-background text-body text-foreground antialiased overflow-x-hidden;
+    font-family: theme("fontFamily.sans");
+    font-optical-sizing: auto;
+    -webkit-tap-highlight-color: transparent;
   }
 
-  /* Grid background pattern */
-  .grid-bg {
-    background-image: 
-      linear-gradient(hsl(var(--grid-color) / 0.1) 1px, transparent 1px),
-      linear-gradient(90deg, hsl(var(--grid-color) / 0.1) 1px, transparent 1px);
-    background-size: 50px 50px;
-    background-position: center center;
+  h1, h2, h3, h4 {
+    text-wrap: balance;
   }
 
-  /* Glow effects */
-  .glow {
-    box-shadow: 0 0 20px hsl(var(--glow) / 0.3), 0 0 40px hsl(var(--glow) / 0.2);
-  }
-
-  .glow-text {
-    text-shadow: 0 0 20px hsl(var(--glow) / 0.5), 0 0 40px hsl(var(--glow) / 0.3);
-  }
-
-  /* Liquid Glass - Apple-inspired */
-  .glass {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(30px) saturate(200%);
-    -webkit-backdrop-filter: blur(30px) saturate(200%);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 
-      0 8px 32px 0 rgba(0, 0, 0, 0.37),
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
-  }
-
-  .glass-card {
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(25px) saturate(180%);
-    -webkit-backdrop-filter: blur(25px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    box-shadow: 
-      0 8px 32px 0 rgba(0, 0, 0, 0.4),
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .glass-card:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.2);
-    box-shadow: 
-      0 12px 48px 0 rgba(0, 0, 0, 0.5),
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.2),
-      0 0 30px rgba(139, 92, 246, 0.3);
-  }
-
-  .glass-input {
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(20px) saturate(150%);
-    -webkit-backdrop-filter: blur(20px) saturate(150%);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: all 0.3s ease;
-  }
-
-  .glass-input:focus {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(139, 92, 246, 0.5);
-    box-shadow: 
-      0 0 20px rgba(139, 92, 246, 0.3),
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
-  }
-
-  /* Magnetic Button Effect */
-  .magnetic-btn {
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-
-  .magnetic-btn:hover {
-    transform: scale(1.05);
+  ::selection {
+    background: hsl(var(--primary) / 0.2);
   }
 }
 
-/* Smooth scroll */
-html.has-scroll-smooth {
-  overflow: hidden;
+@layer components {
+  /* Translucent chrome: content scrolls underneath, the bar keeps its structure */
+  .material {
+    background: hsl(var(--background) / 0.72);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+  }
+
+  @media (prefers-reduced-transparency: reduce) {
+    .material {
+      background: hsl(var(--background));
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+  }
+
+  @media (prefers-contrast: more) {
+    .material {
+      background: hsl(var(--background));
+      border-bottom: 1px solid hsl(var(--foreground) / 0.5);
+    }
+  }
+
+  /* iOS-style icon tile: a tinted square with a white glyph. Set --tint with tint() */
+  .icon-badge {
+    @apply flex h-12 w-12 shrink-0 items-center justify-center rounded-[0.875rem] text-white;
+    background: linear-gradient(180deg, hsl(var(--tint) / 0.8), hsl(var(--tint)));
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.25), 0 6px 16px -6px hsl(var(--tint) / 0.6);
+  }
+
+  /* A soft wash of the tile's tint from its top corner. The tile needs `relative isolate` */
+  .tile-glow {
+    @apply pointer-events-none absolute inset-0 -z-10;
+    background: radial-gradient(120% 90% at 0% 0%, hsl(var(--tint) / var(--glow-tile)), transparent 60%);
+  }
+
+  /* Text link with a chevron that nudges toward where it goes */
+  .chevron-link {
+    @apply inline-flex items-center gap-0.5 text-link transition-colors hover:underline underline-offset-4;
+  }
+
+  .chevron-link svg {
+    @apply transition-transform duration-200 ease-out;
+  }
+
+  @media (hover: hover) {
+    .chevron-link:hover svg {
+      transform: translateX(2px);
+    }
+  }
 }
 
-html.has-scroll-dragging {
-  user-select: none;
+@layer components {
+  /* Section label above a headline: a mono pill, small text tracked open */
+  .eyebrow {
+    @apply inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono text-[11px] uppercase tracking-[0.08em] text-muted-foreground;
+  }
+
+  /* One editorial word in a headline. Instrument Serif runs small, so it's set a touch larger */
+  .accent {
+    @apply font-serif font-normal italic;
+    font-size: 1.08em;
+    letter-spacing: -0.01em;
+  }
+
+  /* Fine film grain over gradients in the dark scheme: reads as material and hides banding.
+     Masked to the glow, so plain black stays black. On white it would only look dirty. */
+  .dark .grain::after {
+    content: "";
+    @apply pointer-events-none absolute inset-0;
+    -webkit-mask-image: radial-gradient(closest-side, #000 35%, transparent);
+    mask-image: radial-gradient(closest-side, #000 35%, transparent);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.09;
+  }
 }
 
-.has-scroll-smooth body {
-  overflow: hidden;
+/* Adaptive pointer (iPadOS): the system cursor hides while ours is active, except over text entry */
+html.adaptive-pointer,
+html.adaptive-pointer * {
+  cursor: none !important;
 }
 
-.has-scroll-smooth [data-scroll-container] {
-  min-height: 100vh;
+html.adaptive-pointer :is(input, textarea, select, [contenteditable]) {
+  cursor: text !important;
+}
+
+/* Lift effect: a small opaque control rises toward the pointer, with a shadow below and a specular highlight on top */
+[data-pointer-lifted] {
+  scale: 1.05;
+  box-shadow: 0 10px 24px -10px rgb(0 0 0 / 0.45);
+  background-image: radial-gradient(circle at var(--pointer-x, 50%) var(--pointer-y, 50%), rgb(255 255 255 / 0.28), transparent 70%);
+}
+
+/* Theme change: the new scheme grows out of the toggle as a circle (set up in lib/theme.ts) */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: revert;
+  }
+}
+
+/* Reduced motion: Radix enter/exit animations (menu, dialogs, toasts) fade instead of sliding */
+@media (prefers-reduced-motion: reduce) {
+  .animate-in,
+  .animate-out {
+    --tw-enter-translate-x: 0 !important;
+    --tw-enter-translate-y: 0 !important;
+    --tw-exit-translate-x: 0 !important;
+    --tw-exit-translate-y: 0 !important;
+    --tw-enter-scale: 1 !important;
+    --tw-exit-scale: 1 !important;
+  }
 }

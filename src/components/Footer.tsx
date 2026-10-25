@@ -1,92 +1,63 @@
-import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Github, Linkedin, Mail } from "lucide-react";
+import { motion } from "motion/react";
+import { EnvelopeSimple, GithubLogo, LinkedinLogo } from "@phosphor-icons/react";
+import { AppearancePicker } from "@/components/ThemeControls";
+import { reveal, scrollToSection } from "@/lib/motion";
+import { navItems } from "@/lib/navigation";
 
-gsap.registerPlugin(ScrollTrigger);
+const socialLinks = [
+  { href: "https://github.com/Storbiic", label: "GitHub", icon: GithubLogo },
+  { href: "https://www.linkedin.com/in/saad-najar/", label: "LinkedIn", icon: LinkedinLogo },
+  { href: "mailto:saadnajar@icloud.com", label: "Email", icon: EnvelopeSimple },
+];
 
 const Footer = () => {
-  const footerRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        footerRef.current,
-        { opacity: 0, y: 60, filter: "blur(10px)" },
-        {
-          opacity: 1,
-          y: 0,
-          filter: "blur(0px)",
-          duration: 1,
-          scrollTrigger: {
-            trigger: footerRef.current,
-            start: "top 90%",
-          },
-        }
-      );
-    }, footerRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
-    <footer ref={footerRef} className="relative py-12 border-t border-primary/20">
-      <div className="grid-bg absolute inset-0 opacity-5" />
-      
-      {/* Floating particles */}
-      <div className="absolute top-0 left-1/4 h-32 w-32 rounded-full bg-glow/5 blur-3xl animate-float" />
-      <div className="absolute bottom-0 right-1/4 h-40 w-40 rounded-full bg-glow-subtle/5 blur-3xl animate-float" style={{ animationDelay: "1s" }} />
-
-      <div className="container relative z-10 mx-auto px-6">
-        <div className="flex flex-col items-center gap-8">
-          {/* Social links */}
-          <div className="flex gap-4">
+    <motion.footer
+      variants={reveal}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "0px 0px -10% 0px" }}
+      className="bg-surface pb-[max(2rem,env(safe-area-inset-bottom))] pt-10 text-xs text-muted-foreground">
+      <div className="container">
+        {/* Navigation: same destinations as the header */}
+        <nav aria-label="Footer" className="flex flex-wrap gap-x-6 gap-y-3">
+          {navItems.map((item) => (
             <a
-              href="https://github.com/Storbiic"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex h-12 w-12 items-center justify-center rounded-full border border-primary/30 bg-background/50 backdrop-blur transition-all hover:border-primary hover:bg-primary/10 hover:scale-110"
+              key={item.href}
+              href={item.href}
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection(item.href);
+              }}
+              className="transition-colors hover:text-foreground hover:underline underline-offset-4"
             >
-              <Github className="h-5 w-5" />
+              {item.label}
             </a>
-            <a
-              href="https://www.linkedin.com/in/saad-najar/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex h-12 w-12 items-center justify-center rounded-full border border-primary/30 bg-background/50 backdrop-blur transition-all hover:border-primary hover:bg-primary/10 hover:scale-110"
-            >
-              <Linkedin className="h-5 w-5" />
-            </a>
-            <a
-              href="mailto:saadnajar@icloud.com"
-              className="flex h-12 w-12 items-center justify-center rounded-full border border-primary/30 bg-background/50 backdrop-blur transition-all hover:border-primary hover:bg-primary/10 hover:scale-110"
-            >
-              <Mail className="h-5 w-5" />
-            </a>
-          </div>
+          ))}
+        </nav>
 
-          {/* Navigation */}
-          <nav className="flex flex-wrap justify-center gap-6 text-sm">
-            <a href="#about" className="text-muted-foreground hover:text-primary transition-colors">
-              About
-            </a>
-            <a href="#projects" className="text-muted-foreground hover:text-primary transition-colors">
-              Projects
-            </a>
-            <a href="#contact" className="text-muted-foreground hover:text-primary transition-colors">
-              Contact
-            </a>
-          </nav>
+        <div className="mt-6 flex flex-col-reverse gap-4 border-t pt-6 sm:flex-row sm:items-center sm:justify-between">
+          <p>© {new Date().getFullYear()} Saad Najar. All rights reserved.</p>
 
-          {/* Copyright */}
-          <div className="text-center">
-            <p className="text-sm text-muted-foreground">
-              © 2025 Saad Najar. All rights reserved.
-            </p>
+          <div className="flex flex-wrap items-center gap-4 sm:-mr-2">
+            <AppearancePicker />
+            <div className="-ml-2 flex gap-1 sm:ml-0">
+              {socialLinks.map(({ href, label, icon: Icon }) => (
+                <a
+                  key={href}
+                  href={href}
+                  aria-label={label}
+                  {...(href.startsWith("http") && { target: "_blank", rel: "noopener noreferrer" })}
+                  className="flex h-9 w-9 items-center justify-center rounded-full transition-colors hover:text-foreground active:bg-secondary"
+                >
+                  <Icon className="h-4 w-4" />
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </div>
-    </footer>
+    </motion.footer>
   );
 };
 

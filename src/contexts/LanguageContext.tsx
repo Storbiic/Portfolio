@@ -13,7 +13,7 @@ const translations = {
     // Navbar
     "nav.about": "About Me",
     "nav.experience": "Experience",
-    "nav.features": "Features",
+    "nav.features": "What I Do",
     "nav.projects": "Projects",
     "nav.organization": "Beyond the code",
     "nav.skills": "Skill Set",
@@ -45,7 +45,7 @@ const translations = {
     "experience.techStack": "Tech Stack",
     
     // Features
-    "features.title": "Features & Expertise",
+    "features.title": "What I Do",
     "features.subtitle": "Specialized skills that drive innovation",
     
     // Projects
@@ -80,7 +80,14 @@ const translations = {
     "contact.error": "Error",
     "contact.errorMessage": "Failed to send message. Please try again or email me directly.",
     "contact.fillFields": "Please fill in all fields",
-    
+    "contact.nameLabel": "Name",
+    "contact.emailLabel": "Email",
+    "contact.messageLabel": "Message",
+    "contact.nameRequired": "Please enter your name",
+    "contact.emailRequired": "Please enter your email",
+    "contact.messageRequired": "Please write a message",
+    "contact.emailInvalid": "That email doesn't look right. Check for typos",
+
     // Footer
     "footer.rights": "All rights reserved",
     "footer.builtWith": "Built with",
@@ -89,7 +96,7 @@ const translations = {
     // Navbar
     "nav.about": "À Propos",
     "nav.experience": "Expérience",
-    "nav.features": "Expertise",
+    "nav.features": "Ce que je fais",
     "nav.projects": "Projets",
     "nav.organization": "Au-delà du Code",
     "nav.skills": "Compétences",
@@ -121,7 +128,7 @@ const translations = {
     "experience.techStack": "Stack Technique",
     
     // Features
-    "features.title": "Fonctionnalités & Expertise",
+    "features.title": "Ce que je fais",
     "features.subtitle": "Compétences spécialisées qui stimulent l'innovation",
     
     // Projects
@@ -156,7 +163,14 @@ const translations = {
     "contact.error": "Erreur",
     "contact.errorMessage": "Échec de l'envoi du message. Veuillez réessayer ou m'envoyer un email directement.",
     "contact.fillFields": "Veuillez remplir tous les champs",
-    
+    "contact.nameLabel": "Nom",
+    "contact.emailLabel": "Email",
+    "contact.messageLabel": "Message",
+    "contact.nameRequired": "Veuillez indiquer votre nom",
+    "contact.emailRequired": "Veuillez indiquer votre email",
+    "contact.messageRequired": "Veuillez écrire un message",
+    "contact.emailInvalid": "Cet email semble incorrect. Vérifiez qu'il n'y a pas de faute",
+
     // Footer
     "footer.rights": "Tous droits réservés",
     "footer.builtWith": "Construit avec",

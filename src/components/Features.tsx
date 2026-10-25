@@ -1,123 +1,70 @@
-import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Brain, Database, Bot, Code, BarChart3, Boxes } from "lucide-react";
+import { motion } from "motion/react";
+import { Brain, BracketsCurly, ChartBar, Database, Robot, RocketLaunch } from "@phosphor-icons/react";
+import SectionHeader from "@/components/SectionHeader";
+import { inView, reveal, tint, type SystemColor } from "@/lib/motion";
 
-gsap.registerPlugin(ScrollTrigger);
-
-const features = [
+const features: { icon: typeof Brain; title: string; description: string; tint: SystemColor }[] = [
   {
     icon: Brain,
     title: "AI & Machine Learning",
     description: "LLM fine-tuning, RAG systems, and deep learning solutions for document extraction and intelligent automation",
+    tint: "purple",
   },
   {
     icon: Database,
     title: "Data Engineering",
     description: "Robust ETL pipelines, data automation, and analytics infrastructure with cloud integration",
+    tint: "blue",
   },
   {
-    icon: Bot,
+    icon: Robot,
     title: "AI-Powered Applications",
     description: "Production-ready chatbots, document extraction systems, and intelligent assistants using LangChain and vector databases",
+    tint: "pink",
   },
   {
-    icon: Code,
+    icon: BracketsCurly,
     title: "Backend Development",
     description: "Scalable microservices with .NET Core, FastAPI, and cloud deployment on Azure and GCP",
+    tint: "indigo",
   },
   {
-    icon: BarChart3,
+    icon: ChartBar,
     title: "Business Intelligence",
     description: "Advanced analytics, KPI dashboards, and automated reporting with Power BI and SQL optimization",
+    tint: "orange",
   },
   {
-    icon: Boxes,
+    icon: RocketLaunch,
     title: "MLOps & Deployment",
     description: "Model deployment, Docker containerization, and end-to-end ML pipeline management with Azure AI",
+    tint: "teal",
   },
 ];
 
 const Features = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        titleRef.current,
-        { opacity: 0, y: 50 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1.5,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: titleRef.current,
-            start: "top 80%",
-          },
-        }
-      );
-
-      cardsRef.current.forEach((card, index) => {
-        if (card) {
-          gsap.fromTo(
-            card,
-            { opacity: 0, scale: 0.8, y: 50 },
-            {
-              opacity: 1,
-              scale: 1,
-              y: 0,
-              duration: 1,
-              delay: index * 0.12,
-              ease: "elastic.out(1, 0.6)",
-              scrollTrigger: {
-                trigger: card,
-                start: "top 85%",
-              },
-            }
-          );
-        }
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
-    <section
-      id="features"
-      ref={sectionRef}
-      className="relative py-32 overflow-hidden"
-    >
-      <div className="grid-bg absolute inset-0 opacity-10" />
-      
-      <div className="container relative z-10 mx-auto px-6">
-        <h2
-          ref={titleRef}
-          className="text-4xl lg:text-6xl font-bold text-center mb-16 glow-text"
-        >
-          Features & Expertise
-        </h2>
+    <section id="features" className="py-24 md:py-32">
+      <div className="container">
+        <SectionHeader id="features" eyebrow="Capabilities" title="What I Do" />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {features.map((feature, index) => (
-            <div
-              key={index}
-              ref={(el) => (cardsRef.current[index] = el)}
-              className="glass p-8 rounded-2xl border border-primary/20 hover:border-primary/40 transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 group cursor-pointer"
+            <motion.div
+              key={feature.title}
+              variants={reveal}
+              {...inView}
+              custom={index % 3}
+              style={tint(feature.tint)}
+              className="relative isolate overflow-hidden rounded-tile bg-surface p-8"
             >
-              <div className="mb-6 p-4 rounded-xl bg-primary/10 border border-primary/20 inline-block group-hover:scale-110 transition-transform duration-300">
-                <feature.icon className="w-8 h-8 text-primary" />
-              </div>
-              <h3 className="text-xl font-bold text-foreground mb-3">
-                {feature.title}
-              </h3>
-              <p className="text-foreground/70 leading-relaxed">
-                {feature.description}
-              </p>
-            </div>
+              <div className="tile-glow" aria-hidden="true" />
+              <span className="icon-badge">
+                <feature.icon size={24} weight="fill" aria-hidden="true" />
+              </span>
+              <h3 className="mt-6 text-title">{feature.title}</h3>
+              <p className="mt-3 text-muted-foreground">{feature.description}</p>
+            </motion.div>
           ))}
         </div>
       </div>

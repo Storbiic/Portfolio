@@ -1,20 +1,56 @@
 import type { Config } from "tailwindcss";
 
+// System font first: SF Pro on Apple devices (with optical sizing), Inter elsewhere
+const systemStack = [
+  "-apple-system",
+  "BlinkMacSystemFont",
+  '"SF Pro Text"',
+  '"SF Pro Display"',
+  "Inter",
+  '"Segoe UI"',
+  "Roboto",
+  '"Helvetica Neue"',
+  "Arial",
+  "sans-serif",
+];
+
+// Editorial accent words: Instrument Serif everywhere, so Safari and Chrome match
+const serifStack = ['"Instrument Serif"', '"New York"', "ui-serif", "Georgia", "serif"];
+
+// Labels, dates and meta: Geist Mono, then the platform's mono
+const monoStack = ['"Geist Mono"', "ui-monospace", '"SF Mono"', "Menlo", "monospace"];
+
 export default {
+  // A class on <html>, set before first paint from the saved choice or the system setting
   darkMode: ["class"],
   content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
   prefix: "",
   theme: {
     container: {
       center: true,
-      padding: "2rem",
+      padding: {
+        DEFAULT: "1.5rem",
+        md: "2rem",
+      },
+      // Content measure close to apple.com's ~1000px column
       screens: {
-        "2xl": "1400px",
+        xl: "1144px",
       },
     },
     extend: {
       fontFamily: {
-        sans: ['Didact Gothic', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
+        sans: systemStack,
+        display: systemStack,
+        serif: serifStack,
+        mono: monoStack,
+      },
+      // Tracking and leading change with size: tight on large type, near zero on body
+      fontSize: {
+        display: ["clamp(3rem, 8vw, 5rem)", { lineHeight: "1.05", letterSpacing: "-0.025em", fontWeight: "600" }],
+        headline: ["clamp(2.25rem, 5vw, 3.5rem)", { lineHeight: "1.08", letterSpacing: "-0.022em", fontWeight: "600" }],
+        lede: ["clamp(1.1875rem, 2.2vw, 1.5rem)", { lineHeight: "1.35", letterSpacing: "-0.012em", fontWeight: "500" }],
+        title: ["1.3125rem", { lineHeight: "1.2", letterSpacing: "-0.015em", fontWeight: "600" }],
+        body: ["1.0625rem", { lineHeight: "1.5", letterSpacing: "-0.01em" }],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -22,6 +58,8 @@ export default {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        surface: "hsl(var(--surface))",
+        link: "hsl(var(--link))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -50,6 +88,16 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        system: {
+          blue: "hsl(var(--system-blue) / <alpha-value>)",
+          indigo: "hsl(var(--system-indigo) / <alpha-value>)",
+          purple: "hsl(var(--system-purple) / <alpha-value>)",
+          pink: "hsl(var(--system-pink) / <alpha-value>)",
+          orange: "hsl(var(--system-orange) / <alpha-value>)",
+          green: "hsl(var(--system-green) / <alpha-value>)",
+          teal: "hsl(var(--system-teal) / <alpha-value>)",
+          red: "hsl(var(--system-red) / <alpha-value>)",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -60,14 +108,13 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
-        glow: "hsl(var(--glow))",
-        "glow-subtle": "hsl(var(--glow-subtle))",
-        glass: "hsl(var(--glass-bg))",
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+        // Large content tiles, as on apple.com
+        tile: "1.75rem",
       },
       keyframes: {
         "accordion-down": {
@@ -86,50 +133,10 @@ export default {
             height: "0",
           },
         },
-        "fade-in": {
-          "0%": {
-            opacity: "0",
-            transform: "translateY(20px)",
-          },
-          "100%": {
-            opacity: "1",
-            transform: "translateY(0)",
-          },
-        },
-        "fade-blur": {
-          "0%": {
-            opacity: "0",
-            filter: "blur(10px)",
-          },
-          "100%": {
-            opacity: "1",
-            filter: "blur(0)",
-          },
-        },
-        float: {
-          "0%, 100%": {
-            transform: "translateY(0px)",
-          },
-          "50%": {
-            transform: "translateY(-20px)",
-          },
-        },
-        glow: {
-          "0%, 100%": {
-            opacity: "1",
-          },
-          "50%": {
-            opacity: "0.5",
-          },
-        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "fade-in": "fade-in 0.6s ease-out",
-        "fade-blur": "fade-blur 0.8s ease-out",
-        float: "float 3s ease-in-out infinite",
-        glow: "glow 2s ease-in-out infinite",
       },
     },
   },
