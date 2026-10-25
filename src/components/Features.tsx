@@ -46,7 +46,7 @@ const Features = () => {
   return (
     <section id="features" className="py-24 md:py-32">
       <div className="container">
-        <SectionHeader id="features" eyebrow="Capabilities" title="What I Do" />
+        <SectionHeader title="What I Do" />
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {features.map((feature, index) => (

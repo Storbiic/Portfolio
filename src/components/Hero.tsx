@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { motion, type MotionValue, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, CaretRight, EnvelopeSimple, GithubLogo, LinkedinLogo, Sparkle } from "@phosphor-icons/react";
+import { ArrowRight, CaretRight, EnvelopeSimple, GithubLogo, LinkedinLogo } from "@phosphor-icons/react";
 import { followPointer, revealText, scrollToSection } from "@/lib/motion";
 
 const socialLinks = [
@@ -89,11 +89,10 @@ const Hero = () => {
       </motion.div>
 
       <div className="container">
-        <motion.p {...enter(0)} className="eyebrow">
-          <Sparkle weight="fill" className="h-3 w-3 text-system-purple" aria-hidden="true" />
+        <motion.p {...enter(0)} className="text-lede font-semibold text-foreground">
           Data Scientist & AI Engineer
         </motion.p>
-        <h1 className="mx-auto mt-6 max-w-4xl text-display">
+        <h1 className="mx-auto mt-3 max-w-4xl text-display">
           <motion.span {...enter(1)} className="inline-block">
             Hi,
           </motion.span>{" "}

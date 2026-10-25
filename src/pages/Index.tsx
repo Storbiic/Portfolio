@@ -8,7 +8,6 @@ import OrganizationWorks from "@/components/OrganizationWorks";
 import SkillSet from "@/components/SkillSet";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import AdaptivePointer from "@/components/AdaptivePointer";
 
 const Index = () => {
   return (
@@ -26,7 +25,6 @@ const Index = () => {
         <Contact />
       </main>
       <Footer />
-      <AdaptivePointer />
     </>
   );
 };

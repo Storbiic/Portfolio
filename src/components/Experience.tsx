@@ -54,7 +54,7 @@ const Experience = () => {
   return (
     <section id="experience" className="bg-surface py-24 md:py-32">
       <div className="container">
-        <SectionHeader id="experience" eyebrow="Career" title="Work Experience" />
+        <SectionHeader title="Work Experience" />
 
         {/* A timeline of roles: when and where on the left, what was built on the right */}
         <div ref={timelineRef} className="relative">
@@ -90,7 +90,7 @@ const Experience = () => {
                 <div className="space-y-1">
                   <p className="text-[15px] font-semibold">{exp.company}</p>
                   {exp.location && <p className="text-[15px] text-muted-foreground">{exp.location}</p>}
-                  <p className="pt-1 font-mono text-[12px] uppercase tracking-[0.04em] text-muted-foreground">{exp.period}</p>
+                  <p className="text-[15px] text-muted-foreground tabular-nums">{exp.period}</p>
                 </div>
 
                 <div className="min-w-0 space-y-3">

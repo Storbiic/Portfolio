@@ -18,7 +18,7 @@ const About = () => {
     <section id="about" className="py-24 md:py-32">
       <div className="container">
         <div className="max-w-4xl">
-          <SectionHeader id="about" eyebrow="Profile" title="About Me" className="" />
+          <SectionHeader title="About Me" className="" />
           <ScrollHighlightText
             className="mt-6 text-[clamp(1.5rem,3vw,2.125rem)] font-semibold leading-[1.2] tracking-[-0.02em]"
             text="I'm a passionate Data Scientist and AI Engineer building intelligent systems that solve real-world problems. With expertise in machine learning, deep learning, and advanced analytics, I transform complex data into actionable insights."

@@ -71,7 +71,7 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
       <div className="flex flex-1 flex-col p-7">
         <h3 className="text-title">{project.title}</h3>
         <p className="mt-3 text-muted-foreground">{project.description}</p>
-        <p className="mt-4 font-mono text-[12px] uppercase tracking-[0.04em] text-muted-foreground">{project.tags.join(" · ")}</p>
+        <p className="mt-4 text-[13px] text-muted-foreground">{project.tags.join(" · ")}</p>
 
         {/* Always visible, so touch users can see where the card goes */}
         <span className="chevron-link mt-auto pt-6 text-[15px]">
@@ -172,8 +172,6 @@ const Projects = () => {
     <section id="projects" className="bg-surface py-24 md:py-32">
       <div className="container">
         <SectionHeader
-          id="projects"
-          eyebrow="Selected work"
           title="Featured Projects"
           lede="Explore my latest work showcasing innovative solutions and cutting-edge technology"
         />

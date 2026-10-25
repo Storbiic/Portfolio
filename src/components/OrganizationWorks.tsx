@@ -31,7 +31,7 @@ const OrganizationWorks = () => {
   return (
     <section id="organization" className="py-24 md:py-32">
       <div className="container">
-        <SectionHeader id="organization" eyebrow="Community" title="Beyond the Code" />
+        <SectionHeader title="Beyond the Code" />
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {organizations.map((org, index) => (

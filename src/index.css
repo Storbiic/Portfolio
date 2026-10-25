@@ -209,11 +209,6 @@ Apple-style palette: neutral surfaces, one blue for actions, and a dark scheme t
 }
 
 @layer components {
-  /* Section label above a headline: a mono pill, small text tracked open */
-  .eyebrow {
-    @apply inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono text-[11px] uppercase tracking-[0.08em] text-muted-foreground;
-  }
-
   /* One editorial word in a headline. Instrument Serif runs small, so it's set a touch larger */
   .accent {
     @apply font-serif font-normal italic;
@@ -231,23 +226,6 @@ Apple-style palette: neutral surfaces, one blue for actions, and a dark scheme t
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     opacity: 0.09;
   }
-}
-
-/* Adaptive pointer (iPadOS): the system cursor hides while ours is active, except over text entry */
-html.adaptive-pointer,
-html.adaptive-pointer * {
-  cursor: none !important;
-}
-
-html.adaptive-pointer :is(input, textarea, select, [contenteditable]) {
-  cursor: text !important;
-}
-
-/* Lift effect: a small opaque control rises toward the pointer, with a shadow below and a specular highlight on top */
-[data-pointer-lifted] {
-  scale: 1.05;
-  box-shadow: 0 10px 24px -10px rgb(0 0 0 / 0.45);
-  background-image: radial-gradient(circle at var(--pointer-x, 50%) var(--pointer-y, 50%), rgb(255 255 255 / 0.28), transparent 70%);
 }
 
 /* Theme change: the new scheme grows out of the toggle as a circle (set up in lib/theme.ts) */

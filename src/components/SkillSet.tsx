@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { Cloud, Code, Sparkle } from "@phosphor-icons/react";
+import { Cloud, Code, Graph } from "@phosphor-icons/react";
 import SectionHeader from "@/components/SectionHeader";
 import { inView, pop, reveal, stagger, tint, type SystemColor } from "@/lib/motion";
 
@@ -18,7 +18,7 @@ const skillCategories: { title: string; icon: typeof Code; tint: SystemColor; sk
   },
   {
     title: "AI & ML",
-    icon: Sparkle,
+    icon: Graph,
     tint: "purple",
     skills: ["PyTorch", "TensorFlow", "Hugging Face", "LangChain", "FAISS", "LLMs", "RAG Systems", "Computer Vision"],
   },
@@ -29,8 +29,6 @@ const SkillSet = () => {
     <section id="skills" className="bg-surface py-24 md:py-32">
       <div className="container">
         <SectionHeader
-          id="skills"
-          eyebrow="Toolkit"
           title="Skill Set"
           lede="Expertise across programming, data engineering, cloud infrastructure, and AI/ML technologies"
         />

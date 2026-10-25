@@ -17,9 +17,6 @@ const systemStack = [
 // Editorial accent words: Instrument Serif everywhere, so Safari and Chrome match
 const serifStack = ['"Instrument Serif"', '"New York"', "ui-serif", "Georgia", "serif"];
 
-// Labels, dates and meta: Geist Mono, then the platform's mono
-const monoStack = ['"Geist Mono"', "ui-monospace", '"SF Mono"', "Menlo", "monospace"];
-
 export default {
   // A class on <html>, set before first paint from the saved choice or the system setting
   darkMode: ["class"],
@@ -42,7 +39,6 @@ export default {
         sans: systemStack,
         display: systemStack,
         serif: serifStack,
-        mono: monoStack,
       },
       // Tracking and leading change with size: tight on large type, near zero on body
       fontSize: {

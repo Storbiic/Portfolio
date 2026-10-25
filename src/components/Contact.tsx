@@ -147,7 +147,7 @@ const Contact = () => {
   return (
     <section id="contact" className="py-24 md:py-32">
       <div className="container">
-        <SectionHeader id="contact" eyebrow="Contact" title={t("contact.title")} lede={t("contact.subtitle")} />
+        <SectionHeader title={t("contact.title")} lede={t("contact.subtitle")} />
 
         <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.25fr)] lg:gap-16">
           {/* Left: Contact info */}
